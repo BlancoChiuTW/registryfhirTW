@@ -7,6 +7,12 @@
  * For more information on configuring policies, check out:
  * https://sailsjs.com/docs/concepts/policies
  */
+const ACL = Object.freeze({
+  ANY: true,
+  ANY_OR_USER: ['check-anon-or-logined'],
+  USER: ['check-login'],
+  ADMIN: ['check-login', 'check-admin'],
+});
 
 module.exports.policies = {
 

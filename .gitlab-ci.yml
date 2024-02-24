@@ -9,6 +9,6 @@ deploy_api:
   stage: deploy_api
   script:
     - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./api/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_API
-    - sshpass -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH_API && npm install && pm2 del igreg-api && pm2 start"
+    - sshpass -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH_API && npm install && pm2 del igreg-api -s && pm2 start"
   only:
     - main
