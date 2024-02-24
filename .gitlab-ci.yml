@@ -1,14 +1,21 @@
 stages:
-  - deploy_api
+  - deploy
 
 cache:
   paths:
     - node_modules/
 
 deploy_api:
-  stage: deploy_api
+  stage: deploy
   script:
     - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./api/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_API
     - sshpass -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH_API && npm install && pm2 restart all"
+  only:
+    - main
+
+deploy_web:
+  stage: deploy
+  script:
+    - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./frontend/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_WEB
   only:
     - main

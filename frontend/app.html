@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <title>TW OpenIgReg</title>
+</head>
+<body>
+  <main>
+    <div class="container py-4">
+      <!-- header -->
+      <a href="/" class="d-flex border-bottom align-items-center text-dark justify-content-center pb-3 mb-4">
+        <span class="fs-3 d-flex align-items-center" style="color: #e9ecef;"><img src="img/fhirlogo.png" style="height: 40px; margin-right: 10px;" />Taiwan FHIR Open Registry</span>
+      </a>
+    </div>
+
+    <!-- 2 columns, width = col-3 + col-9, sidebar includes 2 buttons, main area display tables -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-12">
+          <div class="list-group">
+            <a href="index.html" class="list-group-item list-group-item-action">首頁 Home</a>
+            <a href="ig.html" class="list-group-item list-group-item-action">實作指引 Implementation Guide</a>
+            <a href="app.html" class="list-group-item list-group-item-action">應用程式 Application</a>
+          </div>
+        </div>
+        
+        <div class="col-md-9 col-sm-12 mt-3">
+          <h2><strong>應用程式 Application</strong></h2>
+          <div class="alert alert-info alert-dismissible fade show mt-4" role="alert">
+            <strong>注意：</strong>本平台目前尚在建置中，後台管理功能尚未開放，若有任何問題，請逕與聯絡工作小組。
+          </div>
+          <p class="mt-4"></p>
+          <table class="table mt-4">
+            <thead>
+              <tr>
+                <th scope="col">產品名稱</th>
+                <th scope="col">說明</th>
+                <th scope="col">聯絡資訊</th>
+                <th scope="col">連結</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FHIR 通用轉換工具</td>
+                <td>本工具可透過設定檔的形式，將任意資料轉換為 FHIR 格式。支援以 Web API、CSV、JSON、Excel 試算表做為資料來源，並可於轉換後自動上傳至 FHIR Server 或與第三方介接。本工具支援 TW Core IG 臺灣核心實作指引，並以 CC 3.0 BY-NC-SA 授權條款釋出。</td>
+                <td>Lorex &lt;ceo@sita.tech&gt;</td>
+                <td><a target="_blank" href="https://github.com/Lorex/FHIR-Universal-Conversion-Kit-Project-F.U.C.K.-"><i class="fas fa-external-link-alt"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- bs5 alert -->
+    </div>
+  </main>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
