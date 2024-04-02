@@ -9,14 +9,17 @@
  */
 const express = require('express');
 const serveStatic = require('serve-static');
-const os = require('os');
 
-const dir = `../assets`;
+const assetsDir = `${__dirname}/../assets`;
+const swaggerDir = `../swagger/swagger.json`;
+
 
 
 module.exports.routes = {
-  // 靜態檔案相關
-  'GET /img/*': serveStatic(dir, {skipAssets: true}),
-  'GET /file/*': serveStatic(dir, {skipAssets: true}),
 
+  // 使用者相關
+  'POST /users/login': 'user/login',
+  
+  // 靜態檔案相關
+  '/*': serveStatic(assetsDir, {skipAssets: true}),
 };

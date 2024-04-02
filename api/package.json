@@ -5,13 +5,17 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "@sailshq/lodash": "^3.10.3",
     "sails": "^1.4.2",
     "sails-hook-orm": "^3.0.2",
     "sails-hook-sockets": "^2.0.0",
-    "@sailshq/lodash": "^3.10.3"
+    "sails-hook-swagger-generator": "^3.3.0",
+    "sails-postgresql": "^5.0.1",
+    "swagger-ui-dist": "^5.13.0"
   },
   "devDependencies": {
-    "eslint": "5.16.0"
+    "eslint": "5.16.0",
+    "swagger-ui": "^2.2.10"
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",

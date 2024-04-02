@@ -8,9 +8,8 @@
  * For more information on configuration, check out:
  * https://sailsjs.com/config/http
  */
-
 module.exports.http = {
-
+  
   /****************************************************************************
   *                                                                           *
   * Sails/Express middleware to run for every HTTP request.                   *
@@ -29,16 +28,16 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
+    order: [
     //   'cookieParser',
     //   'session',
     //   'bodyParser',
     //   'compress',
     //   'poweredBy',
-    //   'router',
-    //   'www',
+      // 'www',
+      // 'router',
     //   'favicon',
-    // ],
+    ],
 
 
     /***************************************************************************
@@ -54,7 +53,5 @@ module.exports.http = {
     //   var middlewareFn = skipper({ strict: true });
     //   return middlewareFn;
     // })(),
-
   },
-
 };

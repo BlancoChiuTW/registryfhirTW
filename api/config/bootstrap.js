@@ -11,6 +11,21 @@
 
 module.exports.bootstrap = async function() {
 
+  // If there are no users in the database, create a new user.
+  if (await Users.count() === 0) {
+    sails.log.info('Creating admin user');
+    await Users.create({
+      username: 'admin',
+      password: 'admin',
+      role: 0,
+      email: 'admin@localhost.com',
+      firstname: 'Admin',
+      lastname: 'User',
+      active: true,
+    });
+    return;
+  }
+
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:

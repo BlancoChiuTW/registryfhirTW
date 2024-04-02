@@ -8,5 +8,8 @@
   },
   "hooks": {
     "grunt": false
+  },
+  "paths" : {
+    "public" : "assets"
   }
 }
