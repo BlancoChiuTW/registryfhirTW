@@ -37,6 +37,14 @@ module.exports.errcode = {
       msg: '密碼重設失敗：密碼錯誤',
       status: 400
     },
+    109: {
+      msg: '修改失敗：已有相同的 Mail',
+      status: 400
+    },
+    110: {
+      msg: '修改失敗：無法修改比自己高的權限',
+      status: 400
+    },
 
     // 檔案上傳相關
     200: {

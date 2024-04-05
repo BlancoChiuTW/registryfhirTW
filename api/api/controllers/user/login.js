@@ -1,5 +1,6 @@
-module.exports = {
+const { v4: uuidv4 } = require('uuid');
 
+module.exports = {
 
   friendlyName: 'Login',
 
@@ -23,10 +24,10 @@ module.exports = {
 
   exits: {
     success: {
-      description: '登入成功'
+      responseType: 'ok'
     },
     err: {
-      description: '登入失敗'
+      responseType: 'err'
     }
   },
 
@@ -42,10 +43,29 @@ module.exports = {
       return exits.err(103);
     }
 
+    // 檢查密碼
+    if (inputs.password !== user.password) {
+      return exits.err(104);
+    }
+
+    // 產生 token
+    // Token 產生規則：uuid 去掉 '-' 符號，有效時間自 sails.config.custom.user_session_time 設定，設定單位為分鐘
+    const token = uuidv4().replace(/-/g, '');
+    const expiresAt = new Date().getTime() + sails.config.custom.user_session_time * 60 * 1000;
+
+    // 寫入資料庫
+    await UsersSessions.create({
+      user: user.id,
+      token,
+      expiresAt
+    });
+
 
     // All done.
-    return;
-
+    return exits.success({
+      token,
+      expiresAt: new Date(expiresAt).toISOString()
+    });
   }
 
 

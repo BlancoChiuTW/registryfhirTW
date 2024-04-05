@@ -30,8 +30,8 @@ module.exports.http = {
 
     order: [
     //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
+      'session',
+      'bodyParser',
     //   'compress',
     //   'poweredBy',
       // 'www',

@@ -23,6 +23,9 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
+  'user/get-me': ACL.USER,
+  'user/update-me': ACL.USER,
+  'user/logout': ACL.USER,
   // '*': true,
 
 };
