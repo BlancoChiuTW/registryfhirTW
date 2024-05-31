@@ -26,6 +26,16 @@ module.exports.bootstrap = async function() {
     return;
   }
 
+  // If there are no categories in the database, create a new category.
+  if (await GuidesCategory.count() === 0) {
+    sails.log.info('Creating default category');
+    await GuidesCategory.create({
+      name: '無分類',
+      description: '無分類／預設分類',
+    });
+    return;
+  }
+
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:

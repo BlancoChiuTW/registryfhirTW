@@ -11,13 +11,41 @@ module.exports['swagger-generator'] = {
           version: '1.0.0'
       },
       servers: [
+          { url: 'https://8d01-60-249-179-121.ngrok-free.app' },
           { url: 'http://localhost:1337/' }
       ],
       externalDocs: { url: ''},
+      components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+            }
+        }
+      },
+      tags: [
+        {
+            name: 'User',
+            description: '使用者相關 API'
+        },
+        {
+            name: 'Guide',
+            description: 'IG 相關 API'
+        },
+        {
+            name: 'GuideEdition',
+            description: 'IG 版本相關 API'
+        },
+        {
+            name: 'GuideCategory',
+            description: 'IG 分類相關 API'
+        },
+      ],
+      security: [{bearerAuth: []}],
   },
   defaults: {
       responses: {
-          '200': { description: 'The requested resource' },
+          '200': { description: '請求成功' },
           '400': { description: '資料檢核失敗' },
           '404': { description: '找不到資源' },
           '500': { description: '我掛了，請聯絡 Lorex' }

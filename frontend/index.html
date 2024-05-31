@@ -1,67 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<html>
+  <head>
+    <title><%= productName %></title>
 
+    <meta charset="utf-8">
+    <meta name="description" content="<%= productDescription %>">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
-  <link rel="stylesheet" href="css/style.css">
-  <title>TW OpenIgReg</title>
-</head>
-<body>
-  <main>
-    <div class="container py-4">
-      <!-- header -->
-      <a href="/" class="d-flex border-bottom align-items-center text-dark justify-content-center pb-3 mb-4">
-        <span class="fs-3 d-flex align-items-center" style="color: #e9ecef;"><img src="img/fhirlogo.png" style="height: 40px; margin-right: 10px;" />Taiwan FHIR Open Registry</span>
-      </a>
-    </div>
-
-    <!-- 2 columns, width = col-3 + col-9, sidebar includes 2 buttons, main area display tables -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-12">
-          <div class="list-group">
-            <a href="index.html" class="list-group-item list-group-item-action">首頁 Home</a>
-            <a href="ig.html" class="list-group-item list-group-item-action">實作指引 Implementation Guide</a>
-            <a href="app.html" class="list-group-item list-group-item-action">應用程式 Application</a>
-          </div>
-        </div>
-        
-        <div class="col-md-9 col-sm-12 mt-3">
-          <h1><strong>台灣 FHIR 開放登錄平台</strong></h1>
-          <div class="alert alert-info alert-dismissible fade show mt-4" role="alert">
-            <strong>注意：</strong> 本平台由非營利社群維護，並非政府官方的登錄系統。有關國家標準相關提案事項，請聯絡衛生福利部數位健康雲辦公室。
-          </div>
-          <p class="mt-4">歡迎來到台灣 FHIR 開放登錄平台，本平台旨在提供一個索引系統，使 FHIR 使用者可以登錄、發布或查詢實作指引 (Implementaion Guide) 與應用程式 (Application)，為了促進標準的流通與整合，與政府發布的 IG Registry 相較之下，本平台有更友善使用環境與相對寬鬆的審查機制，並由工作小組獨立運作與審查，以維持平台中立性。</p>
-
-          <p class="mt-4">TW Open Registry 分為以下兩部分：
-            <ul>
-              <li><strong>實作指引 (Implementation Guide)</strong>：提供 FHIR 實作指引的登錄與索引查詢服務。</li>
-              <li><strong>應用程式 (Application)</strong>：提供 FHIR 相關應用程式的登錄與索引查詢服務。</li>
-            </ul>
-          </p>
-
-          <p class="mt-4">本平台採取最小審查原則，一般而言只要您登錄的實作指引／應用程式符合本平台行為準則的要求，便能通過審查。有關審查基準與行為準則，請詳見<a href="coc.html">行為準則</a>頁面。</p>
-          
-          <!-- disclaimer -->
-          <h4 style="margin-top: 50px;"><strong>聲明</strong></h4>
-          <p class="mt-2">
-            <ul>
-              <li><strong>平台之營運</strong>：本平台由 TW FHIR Open Registry 工作小組獨立維運，並由 <a href="https://www.dicom.org.tw/">社團法人台灣醫療影像資訊標準協會 (DICOM 協會)</a> 協助管理。</li>
-              <li><strong>商標聲明</strong>：因應國際健康資訊交換第七層協定協會（HL7® International）之規定，本站點提及的「FHIR®」、「FHIR 標準」、「帶有火焰標示的 HL7 FHIR Logo」是 HL7 的註冊商標，並經由 HL7 許可授權使用。</li>
-            </ul>
-          </p>
-        </div>
-        <!-- bs5 alert -->
-    </div>
-  </main>
-  
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+  </head>
+  <body>
+    <!-- quasar:entry-point -->
+  </body>
 </html>

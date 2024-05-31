@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'User',
+  friendlyName: 'Index',
 
 
-  description: '',
+  description: 'Index something.',
 
 
   inputs: {
@@ -23,11 +23,12 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    
     // All done.
-    delete this.req.session.user.password;
-
-    return exits.success({...this.req.session.user});
+    return exits.success({
+      name: 'Taiwan FHIR IG Registry API',
+      version: '1.0.0',
+      documentation: '/swagger',
+    });
 
   }
 

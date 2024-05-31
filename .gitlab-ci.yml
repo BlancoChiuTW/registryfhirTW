@@ -16,6 +16,6 @@ deploy_api:
 deploy_web:
   stage: deploy
   script:
-    - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./frontend/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_WEB
+    # - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./frontend/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_WEB
   only:
     - main

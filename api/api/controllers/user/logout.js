@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Logout',
+  friendlyName: 'User',
 
 
   description: 'Logout user.',

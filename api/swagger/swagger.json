@@ -1,54 +1,38 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Swagger Json",
-    "description": "This is a generated swagger json for your sails project",
-    "termsOfService": "http://example.com/terms",
+    "title": "TW Open IG Registry API Documentation",
+    "description": "這是 TW Open IG Registry 的 API 文件，若有任何問題請聯絡 Lorex。",
     "contact": {
-      "name": "Theophilus Omoregbee",
-      "url": "http://github.com/theo4u",
-      "email": "theo4u@ymail.com"
+      "name": "",
+      "url": "",
+      "email": ""
     },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "termsOfService": "http://example.com/terms"
   },
   "servers": [
+    {
+      "url": "https://8d01-60-249-179-121.ngrok-free.app"
+    },
     {
       "url": "http://localhost:1337/"
     }
   ],
   "externalDocs": {
-    "url": "http://theophilus.ziippii.com"
+    "url": ""
   },
-  "tags": [
-    {
-      "name": "Guides",
-      "description": "Sails blueprint actions for the **Guides** model"
-    },
-    {
-      "name": "GuidesCategory",
-      "description": "Sails blueprint actions for the **GuidesCategory** model"
-    },
-    {
-      "name": "GuidesEditions",
-      "description": "Sails blueprint actions for the **GuidesEditions** model"
-    },
-    {
-      "name": "Users",
-      "description": "Sails blueprint actions for the **Users** model"
-    },
-    {
-      "name": "UsersSessions",
-      "description": "Sails blueprint actions for the **UsersSessions** model"
-    },
-    {
-      "name": "Login"
-    }
-  ],
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "guides": {
         "type": "object",
@@ -388,66 +372,6 @@
       }
     },
     "parameters": {
-      "ModelPKParam-guides": {
-        "in": "path",
-        "name": "_id",
-        "required": true,
-        "schema": {
-          "type": "integer",
-          "format": "int64",
-          "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-          "uniqueItems": true
-        },
-        "description": "The desired **Guides** record's primary key value"
-      },
-      "ModelPKParam-guidescategory": {
-        "in": "path",
-        "name": "_id",
-        "required": true,
-        "schema": {
-          "type": "integer",
-          "format": "int64",
-          "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-          "uniqueItems": true
-        },
-        "description": "The desired **GuidesCategory** record's primary key value"
-      },
-      "ModelPKParam-guideseditions": {
-        "in": "path",
-        "name": "_id",
-        "required": true,
-        "schema": {
-          "type": "integer",
-          "format": "int64",
-          "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-          "uniqueItems": true
-        },
-        "description": "The desired **GuidesEditions** record's primary key value"
-      },
-      "ModelPKParam-users": {
-        "in": "path",
-        "name": "_id",
-        "required": true,
-        "schema": {
-          "type": "integer",
-          "format": "int64",
-          "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-          "uniqueItems": true
-        },
-        "description": "The desired **Users** record's primary key value"
-      },
-      "ModelPKParam-userssessions": {
-        "in": "path",
-        "name": "_id",
-        "required": true,
-        "schema": {
-          "type": "integer",
-          "format": "int64",
-          "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-          "uniqueItems": true
-        },
-        "description": "The desired **UsersSessions** record's primary key value"
-      },
       "AttributeFilterParam": {
         "in": "query",
         "name": "_*_",
@@ -495,8 +419,123 @@
       }
     }
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Register"
+    },
+    {
+      "name": "Login"
+    },
+    {
+      "name": "Get me"
+    },
+    {
+      "name": "Update me"
+    },
+    {
+      "name": "Logout"
+    },
+    {
+      "name": "Get"
+    },
+    {
+      "name": "Update"
+    }
+  ],
   "paths": {
-    "/users/login": {
+    "/user/register": {
+      "post": {
+        "summary": "Register",
+        "description": "Register user.",
+        "tags": [
+          "Register"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "使用者名稱"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "密碼"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "電子郵件"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "名字"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "姓氏"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/user/login": {
       "post": {
         "summary": "Login",
         "description": "Login user.",
@@ -532,4150 +571,345 @@
                   "oneOf": [
                     {
                       "type": "string",
-                      "description": "登入成功"
+                      "description": "Success"
                     },
                     {
                       "type": "string",
-                      "description": "登入失敗"
+                      "description": "Success"
                     }
                   ]
                 }
               }
             }
           },
+          "400": {
+            "description": "資料檢核失敗"
+          },
           "404": {
-            "description": "Resource not found"
+            "description": "找不到資源"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "我掛了，請聯絡 Lorex"
           }
         }
       }
     },
-    "/guides/find": {
+    "/user/me": {
       "get": {
-        "summary": "List Guides (find where) *",
-        "description": "Find a list of **Guides** records that match the specified criteria.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
+        "summary": "Get me",
         "tags": [
-          "Guides"
+          "Get me"
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,uploader,category,editions"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Responds with a paged list of **Guides** records that match the specified criteria",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guides"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/find/{_id}": {
-      "get": {
-        "summary": "Get Guides (find one) *",
-        "description": "Look up the **Guides** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,uploader,category,editions"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/create": {
-      "get": {
-        "summary": "Create Guides *",
-        "description": "Create a new **Guides** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string",
-              "description": "IG 名稱"
-            },
-            "description": "IG 名稱",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "uploader",
-            "schema": {
-              "description": "上傳者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/users"
-                }
-              ]
-            },
-            "description": "上傳者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "schema": {
-              "type": "string",
-              "description": "IG 描述"
-            },
-            "description": "IG 描述"
-          },
-          {
-            "in": "query",
-            "name": "package_id",
-            "schema": {
-              "type": "string",
-              "description": "NPM 套件名稱"
-            },
-            "description": "NPM 套件名稱"
-          },
-          {
-            "in": "query",
-            "name": "authority",
-            "schema": {
-              "type": "string",
-              "description": "IG 發布單位"
-            },
-            "description": "IG 發布單位"
-          },
-          {
-            "in": "query",
-            "name": "country",
-            "schema": {
-              "type": "string",
-              "description": "IG 適用國家"
-            },
-            "description": "IG 適用國家"
-          },
-          {
-            "in": "query",
-            "name": "language",
-            "schema": {
-              "type": "string",
-              "description": "IG 使用語言"
-            },
-            "description": "IG 使用語言"
-          },
-          {
-            "in": "query",
-            "name": "category",
-            "schema": {
-              "description": "IG 分類 JSON dictionary representing the **guidescategory** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              ]
-            },
-            "description": "IG 分類 JSON dictionary representing the **guidescategory** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "tags",
-            "schema": {
-              "description": "IG 標籤（字串陣列）"
-            },
-            "description": "IG 標籤（字串陣列）"
-          },
-          {
-            "in": "query",
-            "name": "editions",
-            "schema": {
-              "description": "IG 版本清單 Array of **guideseditions**'s or array of FK's when creating / updating / not populated",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/guideseditions"
-              }
-            },
-            "description": "IG 版本清單 Array of **guideseditions**'s or array of FK's when creating / updating / not populated"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **Guides** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
                 }
               }
             }
           },
           "400": {
-            "description": "Validation errors; details in JSON response"
+            "description": "資料檢核失敗"
           },
           "404": {
-            "description": "Resource not found"
+            "description": "找不到資源"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "我掛了，請聯絡 Lorex"
           }
         }
-      }
-    },
-    "/guides/update/{_id}": {
-      "get": {
-        "summary": "Update Guides *",
-        "description": "Update an existing **Guides** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
+      },
+      "put": {
+        "summary": "Update me",
         "tags": [
-          "Guides"
+          "Update me"
         ],
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string",
-              "description": "IG 名稱"
-            },
-            "description": "IG 名稱"
-          },
-          {
-            "in": "query",
-            "name": "uploader",
-            "schema": {
-              "description": "上傳者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/users"
-                }
-              ]
-            },
-            "description": "上傳者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "schema": {
-              "type": "string",
-              "description": "IG 描述"
-            },
-            "description": "IG 描述"
-          },
-          {
-            "in": "query",
-            "name": "package_id",
-            "schema": {
-              "type": "string",
-              "description": "NPM 套件名稱"
-            },
-            "description": "NPM 套件名稱"
-          },
-          {
-            "in": "query",
-            "name": "authority",
-            "schema": {
-              "type": "string",
-              "description": "IG 發布單位"
-            },
-            "description": "IG 發布單位"
-          },
-          {
-            "in": "query",
-            "name": "country",
-            "schema": {
-              "type": "string",
-              "description": "IG 適用國家"
-            },
-            "description": "IG 適用國家"
-          },
-          {
-            "in": "query",
-            "name": "language",
-            "schema": {
-              "type": "string",
-              "description": "IG 使用語言"
-            },
-            "description": "IG 使用語言"
-          },
-          {
-            "in": "query",
-            "name": "category",
-            "schema": {
-              "description": "IG 分類 JSON dictionary representing the **guidescategory** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              ]
-            },
-            "description": "IG 分類 JSON dictionary representing the **guidescategory** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "tags",
-            "schema": {
-              "description": "IG 標籤（字串陣列）"
-            },
-            "description": "IG 標籤（字串陣列）"
-          },
-          {
-            "in": "query",
-            "name": "editions",
-            "schema": {
-              "description": "IG 版本清單 Array of **guideseditions**'s or array of FK's when creating / updating / not populated",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/guideseditions"
-              }
-            },
-            "description": "IG 版本清單 Array of **guideseditions**'s or array of FK's when creating / updating / not populated"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/destroy/{_id}": {
-      "get": {
-        "summary": "Delete Guides (destroy) *",
-        "description": "Delete the **Guides** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **Guides** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/{_id}/{association}/add/{childid}": {
-      "get": {
-        "summary": "Add to for Guides *",
-        "description": "Add a foreign record to one of this **Guides** record's collections.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/add-to",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/add-to"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "in": "path",
-            "name": "childid",
-            "required": true,
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "number",
-                  "format": "double",
-                  "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                  "uniqueItems": true
-                }
-              ]
-            },
-            "description": "The desired target association record's foreign key value"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot perform add to, **Guides** record OR **FK record** with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/{_id}/{association}/replace": {
-      "get": {
-        "summary": "Replace for Guides *",
-        "description": "Replace all of the child records in one of this **Guides** record's associations.\n\nOnly one of the query parameters, that matches the **association** path parameter, should be specified.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/replace",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/replace"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "in": "query",
-            "name": "editions",
-            "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "number",
-                "format": "double",
-                "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                "uniqueItems": true
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot replace, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/{_id}/{association}/remove/{childid}": {
-      "get": {
-        "summary": "Remove from for Guides *",
-        "description": "Remove a foreign record from one of this **Guides** record's collections.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/remove-from",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/remove-from"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "in": "path",
-            "name": "childid",
-            "required": true,
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "number",
-                  "format": "double",
-                  "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                  "uniqueItems": true
-                }
-              ]
-            },
-            "description": "The desired target association record's foreign key value"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot perform remove from, **Guides** record OR **FK record** with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory/find": {
-      "get": {
-        "summary": "List GuidesCategory (find where) *",
-        "description": "Find a list of **GuidesCategory** records that match the specified criteria.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **GuidesCategory** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guidescategory"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory/find/{_id}": {
-      "get": {
-        "summary": "Get GuidesCategory (find one) *",
-        "description": "Look up the **GuidesCategory** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **GuidesCategory** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory/create": {
-      "get": {
-        "summary": "Create GuidesCategory *",
-        "description": "Create a new **GuidesCategory** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string",
-              "description": "分類名稱"
-            },
-            "description": "分類名稱",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **GuidesCategory** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory/update/{_id}": {
-      "get": {
-        "summary": "Update GuidesCategory *",
-        "description": "Update an existing **GuidesCategory** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          },
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string",
-              "description": "分類名稱"
-            },
-            "description": "分類名稱"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **GuidesCategory** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory/destroy/{_id}": {
-      "get": {
-        "summary": "Delete GuidesCategory (destroy) *",
-        "description": "Delete the **GuidesCategory** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **GuidesCategory** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/find": {
-      "get": {
-        "summary": "List GuidesEditions (find where) *",
-        "description": "Find a list of **GuidesEditions** records that match the specified criteria.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,guide"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **GuidesEditions** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guideseditions"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/find/{_id}": {
-      "get": {
-        "summary": "Get GuidesEditions (find one) *",
-        "description": "Look up the **GuidesEditions** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,guide"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **GuidesEditions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/create": {
-      "get": {
-        "summary": "Create GuidesEditions *",
-        "description": "Create a new **GuidesEditions** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "guide",
-            "schema": {
-              "description": "關聯 IG 的 ID JSON dictionary representing the **guides** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/guides"
-                }
-              ]
-            },
-            "description": "關聯 IG 的 ID JSON dictionary representing the **guides** instance or FK when creating / updating / not populated",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "ig_version",
-            "schema": {
-              "type": "string",
-              "description": "IG 版本"
-            },
-            "description": "IG 版本",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "fhir_version",
-            "schema": {
-              "type": "string",
-              "description": "使用的 FHIR 版本"
-            },
-            "description": "使用的 FHIR 版本",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "url",
-            "schema": {
-              "type": "string",
-              "format": "uri",
-              "description": "IG 網址"
-            },
-            "description": "IG 網址",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "string",
-              "default": "draft",
-              "description": "IG 有效狀態：draft 草稿（預設）, active 正式, retired 停用, unknown 未知",
-              "enum": [
-                "draft",
-                "active",
-                "retired",
-                "unknown"
-              ],
-              "example": "draft"
-            },
-            "description": "IG 有效狀態：draft 草稿（預設）, active 正式, retired 停用, unknown 未知"
-          },
-          {
-            "in": "query",
-            "name": "experimental",
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "description": "是否為實驗性 IG（預設為 false）"
-            },
-            "description": "是否為實驗性 IG（預設為 false）"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **GuidesEditions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/update/{_id}": {
-      "get": {
-        "summary": "Update GuidesEditions *",
-        "description": "Update an existing **GuidesEditions** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          },
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "guide",
-            "schema": {
-              "description": "關聯 IG 的 ID JSON dictionary representing the **guides** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/guides"
-                }
-              ]
-            },
-            "description": "關聯 IG 的 ID JSON dictionary representing the **guides** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "ig_version",
-            "schema": {
-              "type": "string",
-              "description": "IG 版本"
-            },
-            "description": "IG 版本"
-          },
-          {
-            "in": "query",
-            "name": "fhir_version",
-            "schema": {
-              "type": "string",
-              "description": "使用的 FHIR 版本"
-            },
-            "description": "使用的 FHIR 版本"
-          },
-          {
-            "in": "query",
-            "name": "url",
-            "schema": {
-              "type": "string",
-              "format": "uri",
-              "description": "IG 網址"
-            },
-            "description": "IG 網址"
-          },
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "string",
-              "default": "draft",
-              "description": "IG 有效狀態：draft 草稿（預設）, active 正式, retired 停用, unknown 未知",
-              "enum": [
-                "draft",
-                "active",
-                "retired",
-                "unknown"
-              ],
-              "example": "draft"
-            },
-            "description": "IG 有效狀態：draft 草稿（預設）, active 正式, retired 停用, unknown 未知"
-          },
-          {
-            "in": "query",
-            "name": "experimental",
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "description": "是否為實驗性 IG（預設為 false）"
-            },
-            "description": "是否為實驗性 IG（預設為 false）"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **GuidesEditions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/destroy/{_id}": {
-      "get": {
-        "summary": "Delete GuidesEditions (destroy) *",
-        "description": "Delete the **GuidesEditions** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **GuidesEditions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users/find": {
-      "get": {
-        "summary": "List Users (find where) *",
-        "description": "Find a list of **Users** records that match the specified criteria.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **Users** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/users"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users/find/{_id}": {
-      "get": {
-        "summary": "Get Users (find one) *",
-        "description": "Look up the **Users** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **Users** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users/create": {
-      "get": {
-        "summary": "Create Users *",
-        "description": "Create a new **Users** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "username",
-            "schema": {
-              "type": "string",
-              "description": "帳號",
-              "maxLength": 50,
-              "uniqueItems": true
-            },
-            "description": "帳號",
-            "required": true
-          },
           {
             "in": "query",
             "name": "password",
+            "required": false,
             "schema": {
-              "type": "string",
-              "description": "密碼"
-            },
-            "description": "密碼",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "role",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "default": 1000,
-              "description": "角色權限：0 管理員, 1 審核員, 999 一般使用者, 1000 等待審核中",
-              "enum": [
-                0,
-                1,
-                999,
-                1000
-              ],
-              "example": 1000
-            },
-            "description": "角色權限：0 管理員, 1 審核員, 999 一般使用者, 1000 等待審核中"
-          },
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string",
-              "format": "email",
-              "description": "電子郵件",
-              "maxLength": 200,
-              "uniqueItems": true
-            },
-            "description": "電子郵件",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "firstname",
-            "schema": {
-              "type": "string",
-              "description": "名字",
-              "maxLength": 50
-            },
-            "description": "名字"
-          },
-          {
-            "in": "query",
-            "name": "lastname",
-            "schema": {
-              "type": "string",
-              "description": "姓氏",
-              "maxLength": 50
-            },
-            "description": "姓氏"
-          },
-          {
-            "in": "query",
-            "name": "active",
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "description": "帳號是否啟用"
-            },
-            "description": "帳號是否啟用"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **Users** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users/update/{_id}": {
-      "get": {
-        "summary": "Update Users *",
-        "description": "Update an existing **Users** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          },
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "username",
-            "schema": {
-              "type": "string",
-              "description": "帳號",
-              "maxLength": 50,
-              "uniqueItems": true
-            },
-            "description": "帳號"
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "schema": {
-              "type": "string",
-              "description": "密碼"
+              "type": "string"
             },
             "description": "密碼"
           },
           {
             "in": "query",
-            "name": "role",
+            "name": "confirmPassword",
+            "required": false,
             "schema": {
-              "type": "number",
-              "format": "double",
-              "default": 1000,
-              "description": "角色權限：0 管理員, 1 審核員, 999 一般使用者, 1000 等待審核中",
-              "enum": [
-                0,
-                1,
-                999,
-                1000
-              ],
-              "example": 1000
+              "type": "string"
             },
-            "description": "角色權限：0 管理員, 1 審核員, 999 一般使用者, 1000 等待審核中"
+            "description": "確認密碼"
           },
           {
             "in": "query",
             "name": "email",
+            "required": false,
             "schema": {
               "type": "string",
-              "format": "email",
-              "description": "電子郵件",
-              "maxLength": 200,
-              "uniqueItems": true
+              "format": "email"
             },
             "description": "電子郵件"
           },
           {
             "in": "query",
             "name": "firstname",
+            "required": false,
             "schema": {
-              "type": "string",
-              "description": "名字",
-              "maxLength": 50
+              "type": "string"
             },
             "description": "名字"
           },
           {
             "in": "query",
             "name": "lastname",
+            "required": false,
             "schema": {
-              "type": "string",
-              "description": "姓氏",
-              "maxLength": 50
+              "type": "string"
             },
             "description": "姓氏"
           },
           {
             "in": "query",
-            "name": "active",
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "description": "帳號是否啟用"
-            },
-            "description": "帳號是否啟用"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Users** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users/destroy/{_id}": {
-      "get": {
-        "summary": "Delete Users (destroy) *",
-        "description": "Delete the **Users** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **Users** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/find": {
-      "get": {
-        "summary": "List UsersSessions (find where) *",
-        "description": "Find a list of **UsersSessions** records that match the specified criteria.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
+            "name": "role",
             "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,user"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **UsersSessions** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/userssessions"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/find/{_id}": {
-      "get": {
-        "summary": "Get UsersSessions (find one) *",
-        "description": "Look up the **UsersSessions** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,user"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **UsersSessions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/create": {
-      "get": {
-        "summary": "Create UsersSessions *",
-        "description": "Create a new **UsersSessions** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "createdAt",
             "schema": {
               "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
+              "format": "double"
             },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "user",
-            "schema": {
-              "description": "關聯使用者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/users"
-                }
-              ]
-            },
-            "description": "關聯使用者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "token",
-            "schema": {
-              "type": "string",
-              "description": "登入 Token",
-              "uniqueItems": true
-            },
-            "description": "登入 Token",
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "expiresAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "Token 有效期限，為 JS Timestamp 格式"
-            },
-            "description": "Token 有效期限，為 JS Timestamp 格式"
+            "description": "角色"
           }
         ],
         "responses": {
           "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **UsersSessions** instance",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/update/{_id}": {
-      "get": {
-        "summary": "Update UsersSessions *",
-        "description": "Update an existing **UsersSessions** record.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          },
-          {
-            "in": "query",
-            "name": "createdAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料建立時間"
-            },
-            "description": "資料建立時間"
-          },
-          {
-            "in": "query",
-            "name": "updatedAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "資料更新時間"
-            },
-            "description": "資料更新時間"
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement",
-              "uniqueItems": true
-            },
-            "description": "唯一識別碼\n\nNote Sails special attributes: autoIncrement"
-          },
-          {
-            "in": "query",
-            "name": "user",
-            "schema": {
-              "description": "關聯使用者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/users"
-                }
-              ]
-            },
-            "description": "關聯使用者 ID JSON dictionary representing the **users** instance or FK when creating / updating / not populated"
-          },
-          {
-            "in": "query",
-            "name": "token",
-            "schema": {
-              "type": "string",
-              "description": "登入 Token",
-              "uniqueItems": true
-            },
-            "description": "登入 Token"
-          },
-          {
-            "in": "query",
-            "name": "expiresAt",
-            "schema": {
-              "type": "number",
-              "format": "double",
-              "description": "Token 有效期限，為 JS Timestamp 格式"
-            },
-            "description": "Token 有效期限，為 JS Timestamp 格式"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **UsersSessions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/destroy/{_id}": {
-      "get": {
-        "summary": "Delete UsersSessions (destroy) *",
-        "description": "Delete the **UsersSessions** record with the specified ID.\n\n(\\*) Note that this is a [Sails blueprint shortcut route](https://sailsjs.com/documentation/concepts/blueprints/blueprint-routes#?shortcut-blueprint-routes) (recommended for **development-mode only**)",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **UsersSessions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides": {
-      "get": {
-        "summary": "List Guides (find where)",
-        "description": "Find a list of **Guides** records that match the specified criteria.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,uploader,category,editions"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **Guides** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guides"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create Guides",
-        "description": "Create a new **Guides** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **Guides** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the Guides instance to create.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guides"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guides/{_id}": {
-      "get": {
-        "summary": "Get Guides (find one)",
-        "description": "Look up the **Guides** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,uploader,category,editions"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update Guides",
-        "description": "Update an existing **Guides** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the Guides instance to update.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guides-without-required-constraint"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete Guides (destroy)",
-        "description": "Delete the **Guides** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **Guides** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/{_id}/{association}/{childid}": {
-      "put": {
-        "summary": "Add to for Guides",
-        "description": "Add a foreign record to one of this **Guides** record's collections.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/add-to",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/add-to"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "in": "path",
-            "name": "childid",
-            "required": true,
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "number",
-                  "format": "double",
-                  "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                  "uniqueItems": true
-                }
-              ]
-            },
-            "description": "The desired target association record's foreign key value"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot perform add to, **Guides** record OR **FK record** with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Remove from for Guides",
-        "description": "Remove a foreign record from one of this **Guides** record's collections.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/remove-from",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/remove-from"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "in": "path",
-            "name": "childid",
-            "required": true,
-            "schema": {
-              "oneOf": [
-                {
-                  "type": "number",
-                  "format": "double",
-                  "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                  "uniqueItems": true
-                }
-              ]
-            },
-            "description": "The desired target association record's foreign key value"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot perform remove from, **Guides** record OR **FK record** with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guides/{_id}/{association}": {
-      "put": {
-        "summary": "Replace for Guides",
-        "description": "Replace all of the child records in one of this **Guides** record's associations.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/replace",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/replace"
-        },
-        "tags": [
-          "Guides"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Guides** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guides"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot replace, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "The primary key values (usually IDs) of the child records to use as the new members of this collection",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
                   "oneOf": [
                     {
-                      "type": "number",
-                      "format": "double",
-                      "description": "**Guides** record's foreign key values to use as the replacement for this collection (**editions** association; 唯一識別碼)",
-                      "uniqueItems": true
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
                     }
                   ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
           }
         }
-      },
-      "get": {
-        "summary": "Populate association for Guides",
-        "description": "Populate and return foreign record(s) for the given association of this **Guides** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/populate-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/populate-where"
-        },
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "summary": "Logout",
+        "description": "Logout user.",
         "tags": [
-          "Guides"
+          "Logout"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/user/{uid}": {
+      "get": {
+        "summary": "Get",
+        "description": "Get user.",
+        "tags": [
+          "Get"
         ],
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guides"
-          },
           {
             "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "uploader",
-                "category",
-                "editions"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
+            "name": "uid",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
+              "type": "number",
+              "format": "double"
             },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name,uploader,description,package_id,authority,country,language,category,tags,editions"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
+            "description": "使用者 ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Responds with the list of associated records as JSON dictionaries",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/users"
-                      },
-                      {
-                        "$ref": "#/components/schemas/guidescategory"
-                      },
-                      {
-                        "$ref": "#/components/schemas/guideseditions"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot populate, **Guides** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guidescategory": {
-      "get": {
-        "summary": "List GuidesCategory (find where)",
-        "description": "Find a list of **GuidesCategory** records that match the specified criteria.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **GuidesCategory** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guidescategory"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create GuidesCategory",
-        "description": "Create a new **GuidesCategory** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **GuidesCategory** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
                 }
               }
             }
           },
           "400": {
-            "description": "Validation errors; details in JSON response"
+            "description": "資料檢核失敗"
           },
           "404": {
-            "description": "Resource not found"
+            "description": "找不到資源"
           },
           "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the GuidesCategory instance to create.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guidescategory"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guidescategory/{_id}": {
-      "get": {
-        "summary": "Get GuidesCategory (find one)",
-        "description": "Look up the **GuidesCategory** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,name"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **GuidesCategory** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
+            "description": "我掛了，請聯絡 Lorex"
           }
         }
       },
-      "patch": {
-        "summary": "Update GuidesCategory",
-        "description": "Update an existing **GuidesCategory** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
+      "put": {
+        "summary": "Update",
+        "description": "Update user.",
         "tags": [
-          "GuidesCategory"
+          "Update"
         ],
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **GuidesCategory** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the GuidesCategory instance to update.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guidescategory-without-required-constraint"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete GuidesCategory (destroy)",
-        "description": "Delete the **GuidesCategory** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "GuidesCategory"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guidescategory"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **GuidesCategory** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guidescategory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **GuidesCategory** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions": {
-      "get": {
-        "summary": "List GuidesEditions (find where)",
-        "description": "Find a list of **GuidesEditions** records that match the specified criteria.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,guide"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **GuidesEditions** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/guideseditions"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create GuidesEditions",
-        "description": "Create a new **GuidesEditions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **GuidesEditions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the GuidesEditions instance to create.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guideseditions"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guideseditions/{_id}": {
-      "get": {
-        "summary": "Get GuidesEditions (find one)",
-        "description": "Look up the **GuidesEditions** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,guide"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **GuidesEditions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update GuidesEditions",
-        "description": "Update an existing **GuidesEditions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **GuidesEditions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the GuidesEditions instance to update.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/guideseditions-without-required-constraint"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete GuidesEditions (destroy)",
-        "description": "Delete the **GuidesEditions** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **GuidesEditions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/guideseditions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/guideseditions/{_id}/{association}": {
-      "get": {
-        "summary": "Populate association for GuidesEditions",
-        "description": "Populate and return foreign record(s) for the given association of this **GuidesEditions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/populate-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/populate-where"
-        },
-        "tags": [
-          "GuidesEditions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-guideseditions"
-          },
           {
             "in": "path",
-            "name": "association",
-            "required": true,
+            "name": "uid",
+            "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "guide"
-              ]
+              "type": "number",
+              "format": "double"
             },
-            "description": "The name of the association"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
+            "description": "使用者 ID"
           },
           {
             "in": "query",
-            "name": "select",
+            "name": "password",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
+              "type": "string"
             },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
+            "description": "密碼"
           },
           {
             "in": "query",
-            "name": "omit",
+            "name": "email",
             "required": false,
             "schema": {
               "type": "string",
-              "example": "createdAt,updatedAt,id,guide,ig_version,fhir_version,url,status,experimental"
+              "format": "email"
             },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
+            "description": "電子郵件"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "名字"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "姓氏"
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "角色"
           }
         ],
         "responses": {
           "200": {
-            "description": "Responds with the list of associated records as JSON dictionaries",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/guides"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot populate, **GuidesEditions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "summary": "List Users (find where)",
-        "description": "Find a list of **Users** records that match the specified criteria.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **Users** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/users"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create Users",
-        "description": "Create a new **Users** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **Users** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
                 }
               }
             }
           },
           "400": {
-            "description": "Validation errors; details in JSON response"
+            "description": "資料檢核失敗"
           },
           "404": {
-            "description": "Resource not found"
+            "description": "找不到資源"
           },
           "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the Users instance to create.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/users"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{_id}": {
-      "get": {
-        "summary": "Get Users (find one)",
-        "description": "Look up the **Users** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,username,password,role,email,firstname,lastname,active"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **Users** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update Users",
-        "description": "Update an existing **Users** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **Users** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the Users instance to update.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/users-without-required-constraint"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete Users (destroy)",
-        "description": "Delete the **Users** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-users"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **Users** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/users"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **Users** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions": {
-      "get": {
-        "summary": "List UsersSessions (find where)",
-        "description": "Find a list of **UsersSessions** records that match the specified criteria.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-where"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/AttributeFilterParam"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,user"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a paged list of **UsersSessions** records that match the specified criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/userssessions"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create UsersSessions",
-        "description": "Create a new **UsersSessions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/create",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/create"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the newly created **UsersSessions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the UsersSessions instance to create.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/userssessions"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/userssessions/{_id}": {
-      "get": {
-        "summary": "Get UsersSessions (find one)",
-        "description": "Look up the **UsersSessions** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/find-one",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/find-one"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "populate",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "false,user"
-            },
-            "description": "If specified, overide the default automatic population process. Accepts a comma-separated list of attribute names for which to populate record values, or specify `false` to have no attributes populated."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a single **UsersSessions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Response denoting **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update UsersSessions",
-        "description": "Update an existing **UsersSessions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/update",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/update"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the newly updated **UsersSessions** record as a JSON dictionary",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation errors; details in JSON response"
-          },
-          "404": {
-            "description": "Cannot update, **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "description": "JSON dictionary representing the UsersSessions instance to update.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/userssessions-without-required-constraint"
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete UsersSessions (destroy)",
-        "description": "Delete the **UsersSessions** record with the specified ID.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/destroy",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/destroy"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with a JSON dictionary representing the destroyed **UsersSessions** instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/userssessions"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot destroy, **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/userssessions/{_id}/{association}": {
-      "get": {
-        "summary": "Populate association for UsersSessions",
-        "description": "Populate and return foreign record(s) for the given association of this **UsersSessions** record.",
-        "externalDocs": {
-          "url": "https://sailsjs.com/documentation/reference/blueprint-api/populate-where",
-          "description": "See https://sailsjs.com/documentation/reference/blueprint-api/populate-where"
-        },
-        "tags": [
-          "UsersSessions"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ModelPKParam-userssessions"
-          },
-          {
-            "in": "path",
-            "name": "association",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "user"
-              ]
-            },
-            "description": "The name of the association"
-          },
-          {
-            "$ref": "#/components/parameters/WhereQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/LimitQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SkipQueryParam"
-          },
-          {
-            "$ref": "#/components/parameters/SortQueryParam"
-          },
-          {
-            "in": "query",
-            "name": "select",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to include in the result, specified as a comma-delimited list. By default, all attributes are selected. Not valid for plural (“collection”) association attributes."
-          },
-          {
-            "in": "query",
-            "name": "omit",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "createdAt,updatedAt,id,user,token,expiresAt"
-            },
-            "description": "The attributes to exclude from the result, specified as a comma-delimited list. Cannot be used in conjuction with `select`. Not valid for plural (“collection”) association attributes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Responds with the list of associated records as JSON dictionaries",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/users"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cannot populate, **UsersSessions** record with specified ID **NOT** found"
-          },
-          "500": {
-            "description": "Internal server error"
+            "description": "我掛了，請聯絡 Lorex"
           }
         }
       }

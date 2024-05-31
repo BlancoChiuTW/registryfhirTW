@@ -1,20 +1,18 @@
+
+
 module.exports = {
 
-
   friendlyName: 'User',
-
-
-  description: '',
-
+  description: 'Update user.',
 
   inputs: {
+    uid: {
+      type: 'number',
+      description: '使用者 ID'
+    },
     password: {
       type: 'string',
       description: '密碼'
-    },
-    confirmPassword: {
-      type: 'string',
-      description: '確認密碼'
     },
     email: {
       type: 'string',
@@ -48,17 +46,12 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    // 如果有傳入密碼，則檢查確認密碼是否相同
-    if(inputs.password && inputs.password !== inputs.confirmPassword){
-      return exits.err(107);
-    }
-
     // 檢查是否有重複的 email
     if(inputs.email) {
       const user = await Users.find({
         email: inputs.email
       }).limit(1);
-      if (user && user.id !== this.req.session.user.id) {
+      if (user && user.id !== inputs.uid) {
         return exits.err(109);
       }
     }

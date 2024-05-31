@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Register',
+  friendlyName: 'User',
 
 
   description: 'Register user.',

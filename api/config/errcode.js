@@ -45,18 +45,30 @@ module.exports.errcode = {
       msg: '修改失敗：無法修改比自己高的權限',
       status: 400
     },
-
-    // 檔案上傳相關
-    200: {
-      msg: '檔案上傳失敗',
-      status: 500
+    111: {
+      msg: '查詢失敗，無此使用者',
+      status: 404
     },
-    201: {
-      msg: '上傳的檔案非圖片檔',
+
+    // IG 相關
+    200: {
+      msg: '找不到 IG',
       status: 400
     },
+    201: {
+      msg: '無法修改不是由自己發布的 IG',
+      status: 403
+    },
     202: {
-      msg: '你沒有上傳任何檔案或是上傳太多檔案 =口=',
+      msg: '找不到 IG Category',
+      status: 400
+    },
+    203: {
+      msg: '找不到 IG Edition',
+      status: 400
+    },
+    204: {
+      msg: '請至少指定一個 IG 版本',
       status: 400
     },
 
@@ -140,6 +152,10 @@ module.exports.errcode = {
       msg: '操作失敗：尚未登入',
       status: 401,
     },
+    990: {
+      msg: '資料檢核失敗',
+      status: 400,
+    },
     991: {
       msg: '資料格式錯誤',
       status: 400,
@@ -171,6 +187,10 @@ module.exports.errcode = {
     998: {
       msg: '測試階段：會員無法升級或降級',
       status: 400,
+    },
+    999: {
+      msg: '未知的錯誤',
+      status: 500,
     },
   }
 };

@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
 
-  friendlyName: 'Login',
+  friendlyName: 'User',
 
 
   description: 'Login user.',

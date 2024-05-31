@@ -17,30 +17,22 @@
   },
   "servers": [
     {
+      "url": "https://8d01-60-249-179-121.ngrok-free.app"
+    },
+    {
       "url": "http://localhost:1337/"
     }
   ],
   "externalDocs": {
     "url": ""
   },
-  "tags": [
-    {
-      "name": "Register"
-    },
-    {
-      "name": "Login"
-    },
-    {
-      "name": "Get me"
-    },
-    {
-      "name": "Update me"
-    },
-    {
-      "name": "Logout"
-    }
-  ],
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "guides": {
         "type": "object",
@@ -427,13 +419,322 @@
       }
     }
   },
+  "tags": [
+    {
+      "name": "User",
+      "description": "使用者相關 API"
+    },
+    {
+      "name": "Guide",
+      "description": "IG 相關 API"
+    },
+    {
+      "name": "GuideEdition",
+      "description": "IG 版本相關 API"
+    },
+    {
+      "name": "Destroy"
+    },
+    {
+      "name": "Index"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
+    "/ig": {
+      "post": {
+        "summary": "Guide",
+        "description": "Create ig.",
+        "tags": [
+          "Guide"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "IG 名稱"
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 描述"
+          },
+          {
+            "in": "query",
+            "name": "package_id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "NPM 套件名稱"
+          },
+          {
+            "in": "query",
+            "name": "authority",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 發布單位"
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "TW",
+              "example": "TW"
+            },
+            "description": "IG 適用國家"
+          },
+          {
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "zh-TW",
+              "example": "zh-TW"
+            },
+            "description": "IG 使用語言"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 1,
+              "example": 1
+            },
+            "description": "IG 分類"
+          },
+          {
+            "in": "query",
+            "name": "tags",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {},
+              "default": [],
+              "example": []
+            },
+            "description": "IG 標籤（字串陣列）"
+          },
+          {
+            "in": "query",
+            "name": "ig_version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "IG 版本"
+          },
+          {
+            "in": "query",
+            "name": "fhir_version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "使用的 FHIR 版本"
+          },
+          {
+            "in": "query",
+            "name": "url",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "IG 網址"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "draft",
+              "enum": [
+                "draft",
+                "active",
+                "retired",
+                "unknown"
+              ],
+              "example": "draft"
+            },
+            "description": "IG 有效狀態：draft 草稿（預設）, active 正式, retired 停用, unknown 未知"
+          },
+          {
+            "in": "query",
+            "name": "experimental",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "是否為實驗性 IG（預設為 false）"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "get": {
+        "summary": "Guide",
+        "description": "Get ig.",
+        "tags": [
+          "Guide"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 名稱"
+          },
+          {
+            "in": "query",
+            "name": "authority",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 發布單位"
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 適用國家"
+          },
+          {
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 使用語言"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 1,
+              "example": 1
+            },
+            "description": "頁數"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 10,
+              "example": 10
+            },
+            "description": "每頁筆數"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
     "/user/register": {
       "post": {
-        "summary": "Register",
+        "summary": "User",
         "description": "Register user.",
         "tags": [
-          "Register"
+          "User"
         ],
         "parameters": [
           {
@@ -517,10 +818,10 @@
     },
     "/user/login": {
       "post": {
-        "summary": "Login",
+        "summary": "User",
         "description": "Login user.",
         "tags": [
-          "Login"
+          "User"
         ],
         "parameters": [
           {
@@ -576,9 +877,9 @@
     },
     "/user/me": {
       "get": {
-        "summary": "Get me",
+        "summary": "User",
         "tags": [
-          "Get me"
+          "User"
         ],
         "parameters": [],
         "responses": {
@@ -613,9 +914,9 @@
         }
       },
       "put": {
-        "summary": "Update me",
+        "summary": "User",
         "tags": [
-          "Update me"
+          "User"
         ],
         "parameters": [
           {
@@ -709,10 +1010,998 @@
     },
     "/user/logout": {
       "post": {
-        "summary": "Logout",
+        "summary": "User",
         "description": "Logout user.",
         "tags": [
-          "Logout"
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/user/{uid}": {
+      "get": {
+        "summary": "User",
+        "description": "Get user.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uid",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "使用者 ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "put": {
+        "summary": "User",
+        "description": "Update user.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uid",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "使用者 ID"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "密碼"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "電子郵件"
+          },
+          {
+            "in": "query",
+            "name": "firstname",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "名字"
+          },
+          {
+            "in": "query",
+            "name": "lastname",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "姓氏"
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "角色"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/ig/{id}": {
+      "get": {
+        "summary": "Guide",
+        "tags": [
+          "Guide"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "put": {
+        "summary": "Guide",
+        "description": "Update ig.",
+        "tags": [
+          "Guide"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "id"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 名稱"
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 描述"
+          },
+          {
+            "in": "query",
+            "name": "package_id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "NPM 套件名稱"
+          },
+          {
+            "in": "query",
+            "name": "authority",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 發布單位"
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 適用國家"
+          },
+          {
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "description": "IG 使用語言"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": -1,
+              "example": -1
+            },
+            "description": "IG 分類"
+          },
+          {
+            "in": "query",
+            "name": "tags",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "default": null
+            },
+            "description": "IG 標籤（字串陣列）"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 1,
+              "example": 1
+            },
+            "description": "頁數"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "default": 10,
+              "example": 10
+            },
+            "description": "每頁筆數"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Guide",
+        "description": "Destroy ig.",
+        "tags": [
+          "Guide"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/ig/{guide}/edition": {
+      "get": {
+        "summary": "GuideEdition",
+        "description": "Get edition.",
+        "tags": [
+          "GuideEdition"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "guide",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "post": {
+        "summary": "GuideEdition",
+        "description": "Create edition.",
+        "tags": [
+          "GuideEdition"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "guide",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG ID"
+          },
+          {
+            "in": "query",
+            "name": "ig_version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "IG 版本"
+          },
+          {
+            "in": "query",
+            "name": "fhir_version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "FHIR 版本"
+          },
+          {
+            "in": "query",
+            "name": "url",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "IG 網址"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "draft",
+              "enum": [
+                "draft",
+                "active",
+                "retired",
+                "unknown"
+              ],
+              "example": "draft"
+            },
+            "description": "IG 狀態"
+          },
+          {
+            "in": "query",
+            "name": "experimental",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "是否為實驗性 IG"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/ig/{guide}/edition/{edition_id}": {
+      "get": {
+        "summary": "GuideEdition",
+        "description": "Get specific edition of IG.",
+        "tags": [
+          "GuideEdition"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "guide",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG ID"
+          },
+          {
+            "in": "path",
+            "name": "edition_id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG 版本 ID (資料中的 ID)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "put": {
+        "summary": "GuideEdition",
+        "description": "Update edition.",
+        "tags": [
+          "GuideEdition"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "guide",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG ID"
+          },
+          {
+            "in": "path",
+            "name": "edition_id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "Edition ID"
+          },
+          {
+            "in": "query",
+            "name": "ig_version",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "-1",
+              "example": "-1"
+            },
+            "description": "IG 版本"
+          },
+          {
+            "in": "query",
+            "name": "fhir_version",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "-1",
+              "example": "-1"
+            },
+            "description": "FHIR 版本"
+          },
+          {
+            "in": "query",
+            "name": "url",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "-1",
+              "example": "-1"
+            },
+            "description": "IG 網址"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "nochange",
+              "enum": [
+                "draft",
+                "active",
+                "retired",
+                "unknown",
+                "nochange"
+              ],
+              "example": "nochange"
+            },
+            "description": "IG 狀態"
+          },
+          {
+            "in": "query",
+            "name": "experimental",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "是否為實驗性 IG"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Destroy",
+        "description": "Destroy edition.",
+        "tags": [
+          "Destroy"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "guide",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG ID"
+          },
+          {
+            "in": "path",
+            "name": "edition_id",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "IG 版本 ID (資料中的 ID)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Index",
+        "description": "Index something.",
+        "tags": [
+          "Index"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "put": {
+        "summary": "Index",
+        "description": "Index something.",
+        "tags": [
+          "Index"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "post": {
+        "summary": "Index",
+        "description": "Index something.",
+        "tags": [
+          "Index"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Index",
+        "description": "Index something.",
+        "tags": [
+          "Index"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Index",
+        "description": "Index something.",
+        "tags": [
+          "Index"
         ],
         "parameters": [],
         "responses": {
