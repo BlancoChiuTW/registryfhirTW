@@ -49,7 +49,8 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-postgresql',
-    url: 'postgresql://postgres:123456@localhost:32768/igreg',
+    // url: 'postgresql://postgres:123456@localhost:32768/igreg',
+    url: 'postgresql://fhir:igreg@localhost:5432/igreg',
 
     //adapter: 'sails-disk',    
   },
