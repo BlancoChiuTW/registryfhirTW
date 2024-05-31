@@ -11,7 +11,7 @@ module.exports['swagger-generator'] = {
           version: '1.0.0'
       },
       servers: [
-          { url: 'https://registry.fhir.tw/api/' },
+          { url: 'https://api.registry.fhir.tw/' },
           { url: 'http://localhost:1337/' }
       ],
       externalDocs: { url: ''},
