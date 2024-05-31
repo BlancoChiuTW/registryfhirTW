@@ -11,7 +11,7 @@ module.exports['swagger-generator'] = {
           version: '1.0.0'
       },
       servers: [
-          { url: 'https://8d01-60-249-179-121.ngrok-free.app' },
+          { url: 'https://registry.fhir.tw/api/' },
           { url: 'http://localhost:1337/' }
       ],
       externalDocs: { url: ''},
