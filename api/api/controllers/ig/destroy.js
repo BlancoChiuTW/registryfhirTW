@@ -43,11 +43,9 @@ module.exports = {
     }
 
     // destroy all editions
-    const _ = await ig.editions.forEach(async edition => {
-      await GuidesEditions.destroy({
-        id: edition.id
-      });
-    })
+    const _ = await GuidesEditions.destroy({
+      guide: inputs.id
+    });
 
     // destroy ig
     const __ = await Guides.destroy({
