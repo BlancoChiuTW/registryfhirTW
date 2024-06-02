@@ -37,8 +37,10 @@ module.exports = {
       return exits.err(200);
     }
 
+    sails.log(ig.uploader, this.req.session.user.id, this.req.session.user.role)
+
     // check permission
-    if ((ig.uploader !== this.req.session.user.id) && (this.req.session.user.role === 999)) {
+    if ((ig.uploader !== this.req.session.user.id) && (this.req.session.user.role>= 999)) {
       return exits.err(201);
     }
 

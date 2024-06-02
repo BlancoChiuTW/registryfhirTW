@@ -17,7 +17,7 @@
   },
   "servers": [
     {
-      "url": "https://8d01-60-249-179-121.ngrok-free.app"
+      "url": "https://api.registry.fhir.tw/"
     },
     {
       "url": "http://localhost:1337/"
@@ -433,7 +433,7 @@
       "description": "IG 版本相關 API"
     },
     {
-      "name": "Destroy"
+      "name": "Category"
     },
     {
       "name": "Index"
@@ -448,7 +448,7 @@
     "/ig": {
       "post": {
         "summary": "Guide",
-        "description": "Create ig.",
+        "description": "【使用者功能】新增一筆 IG 資料，並建立第一個版本發布資料",
         "tags": [
           "Guide"
         ],
@@ -627,7 +627,7 @@
       },
       "get": {
         "summary": "Guide",
-        "description": "Get ig.",
+        "description": "【無權限要求】取得 IG 資料列表",
         "tags": [
           "Guide"
         ],
@@ -729,10 +729,60 @@
         }
       }
     },
+    "/category": {
+      "post": {
+        "summary": "Category",
+        "description": "【管理員功能】新增 IG 類別",
+        "tags": [
+          "Category"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "類別名稱"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    },
+                    {
+                      "type": "string",
+                      "description": "Success"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "資料檢核失敗"
+          },
+          "404": {
+            "description": "找不到資源"
+          },
+          "500": {
+            "description": "我掛了，請聯絡 Lorex"
+          }
+        }
+      }
+    },
     "/user/register": {
       "post": {
         "summary": "User",
-        "description": "Register user.",
+        "description": "使用者註冊",
         "tags": [
           "User"
         ],
@@ -819,7 +869,7 @@
     "/user/login": {
       "post": {
         "summary": "User",
-        "description": "Login user.",
+        "description": "使用者登入",
         "tags": [
           "User"
         ],
@@ -878,6 +928,7 @@
     "/user/me": {
       "get": {
         "summary": "User",
+        "description": "取得目前登入的使用者資料",
         "tags": [
           "User"
         ],
@@ -915,6 +966,7 @@
       },
       "put": {
         "summary": "User",
+        "description": "【使用者功能】更新自己的使用者資料",
         "tags": [
           "User"
         ],
@@ -1011,7 +1063,7 @@
     "/user/logout": {
       "post": {
         "summary": "User",
-        "description": "Logout user.",
+        "description": "使用者登出",
         "tags": [
           "User"
         ],
@@ -1051,7 +1103,7 @@
     "/user/{uid}": {
       "get": {
         "summary": "User",
-        "description": "Get user.",
+        "description": "【管理員功能】取得使用者資料",
         "tags": [
           "User"
         ],
@@ -1100,7 +1152,7 @@
       },
       "put": {
         "summary": "User",
-        "description": "Update user.",
+        "description": "【管理員功能】更新使用者資料",
         "tags": [
           "User"
         ],
@@ -1198,6 +1250,7 @@
     "/ig/{id}": {
       "get": {
         "summary": "Guide",
+        "description": "【無權限要求】取得指定一筆 IG 資料",
         "tags": [
           "Guide"
         ],
@@ -1246,7 +1299,7 @@
       },
       "put": {
         "summary": "Guide",
-        "description": "Update ig.",
+        "description": "【使用者功能】更新 IG 資料，只能更新自己上傳的 IG 資料，管理員則無限制",
         "tags": [
           "Guide"
         ],
@@ -1402,7 +1455,7 @@
       },
       "delete": {
         "summary": "Guide",
-        "description": "Destroy ig.",
+        "description": "【使用者功能】刪除一筆 IG 資料，並刪除這個 IG 底下所有版本發布資料，只能刪除自己上傳的 IG 資料，管理員則無限制",
         "tags": [
           "Guide"
         ],
@@ -1453,7 +1506,7 @@
     "/ig/{guide}/edition": {
       "get": {
         "summary": "GuideEdition",
-        "description": "Get edition.",
+        "description": "【無權限要求】取得特定 IG 底下的所有版本發布資料",
         "tags": [
           "GuideEdition"
         ],
@@ -1502,7 +1555,7 @@
       },
       "post": {
         "summary": "GuideEdition",
-        "description": "Create edition.",
+        "description": "【使用者功能】新增 IG 底下的版本發布",
         "tags": [
           "GuideEdition"
         ],
@@ -1607,7 +1660,7 @@
     "/ig/{guide}/edition/{edition_id}": {
       "get": {
         "summary": "GuideEdition",
-        "description": "Get specific edition of IG.",
+        "description": "【無權限要求】取得特定 IG 底下的單一筆版本發布資料",
         "tags": [
           "GuideEdition"
         ],
@@ -1666,7 +1719,7 @@
       },
       "put": {
         "summary": "GuideEdition",
-        "description": "Update edition.",
+        "description": "【使用者功能】更新特定 IG 底下的版本發布資料，只能更新自己上傳的資料，管理員則無限制",
         "tags": [
           "GuideEdition"
         ],
@@ -1785,10 +1838,10 @@
         }
       },
       "delete": {
-        "summary": "Destroy",
-        "description": "Destroy edition.",
+        "summary": "GuideEdition",
+        "description": "【使用者功能】移除特定 IG 底下的版本發布，只能移除自己發布的 IG，若為管理員則無限制。",
         "tags": [
-          "Destroy"
+          "GuideEdition"
         ],
         "parameters": [
           {
@@ -1847,7 +1900,7 @@
     "/": {
       "get": {
         "summary": "Index",
-        "description": "Index something.",
+        "description": "首頁",
         "tags": [
           "Index"
         ],
@@ -1885,7 +1938,7 @@
       },
       "put": {
         "summary": "Index",
-        "description": "Index something.",
+        "description": "首頁",
         "tags": [
           "Index"
         ],
@@ -1923,7 +1976,7 @@
       },
       "post": {
         "summary": "Index",
-        "description": "Index something.",
+        "description": "首頁",
         "tags": [
           "Index"
         ],
@@ -1961,7 +2014,7 @@
       },
       "delete": {
         "summary": "Index",
-        "description": "Index something.",
+        "description": "首頁",
         "tags": [
           "Index"
         ],
@@ -1999,7 +2052,7 @@
       },
       "patch": {
         "summary": "Index",
-        "description": "Index something.",
+        "description": "首頁",
         "tags": [
           "Index"
         ],

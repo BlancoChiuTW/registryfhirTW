@@ -62,7 +62,7 @@ module.exports = {
     }
 
     // check permission
-    if ((guide.uploader !== this.req.session.user.id) && (this.req.session.user.role === 999)) {
+    if ((guide.uploader !== this.req.session.user.id) && (this.req.session.user.role>= 999)) {
       return exits.err(201);
     }
 

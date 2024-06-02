@@ -57,7 +57,7 @@ module.exports = {
     }
 
     // 檢查權限（使用者不能修改自己的權限）
-    if(inputs.role && inputs.role === 999){
+    if(inputs.role && inputs.role>= 999){
       return exits.err(110);
     }
 
