@@ -111,7 +111,7 @@ module.exports = {
       authority: (inputs.authority === '') ? ig.authority : inputs.authority,
       country: (inputs.country === '') ? ig.country : inputs.country,
       language: (inputs.language === '') ? ig.language : inputs.language,
-      category: (inputs.category === 1) ? ig.category : inputs.category,
+      category: (inputs.category === -1) ? ig.category : inputs.category,
       tags: (inputs.tags === null) ? ig.tags : inputs.tags,
     };
 
