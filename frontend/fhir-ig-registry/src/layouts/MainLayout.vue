@@ -31,37 +31,45 @@
 <script>
 import { defineComponent, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useNotifications } from '../components/useNotifications';
 
 export default defineComponent({
   name: 'MainLayout',
   setup() {
+    const { notifySuccess, handleErrorResponse } = useNotifications();
     const loggedIn = ref(false);
     const router = useRouter();
 
     const goToHome = () => {
       router.push('/');
+      notifySuccess('回到首頁');
     };
 
     const goToGuide = () => {
       router.push('/Implementation');
+      notifySuccess('進入實作指引');
     };
 
     const goToApplication = () => {
       router.push('/application');
+      notifySuccess('進入應用程式');
     };
 
     const goToAddGuide = () => {
       router.push('/add-guide');
+      notifySuccess('新增實作指引');
     };
 
     const goToLogin = () => {
       router.push('/login');
+      notifySuccess('登入頁面');
     };
 
     const logout = () => {
       loggedIn.value = false;
       localStorage.removeItem('isLoggedIn');
       router.push('/login');
+      notifySuccess('已登出');
     };
 
     onMounted(() => {

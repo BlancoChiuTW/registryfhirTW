@@ -42,6 +42,9 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
+
+const API_BASE_URL = "https://api.registry.fhir.tw";
 
 export default defineComponent({
   name: 'LoginPage',
@@ -50,14 +53,26 @@ export default defineComponent({
     const password = ref('');
     const router = useRouter();
 
-    const handleLogin = () => {
-      const correctUsername = 'test123';
-      const correctPassword = 'test123';
-      if (username.value === correctUsername && password.value === correctPassword) {
-        localStorage.setItem('isLoggedIn', 'true');
-        router.push('/');
-      } else {
-        alert('帳號或密碼錯誤.');
+    const handleLogin = async () => {
+      try {
+        const response = await axios.post(`${API_BASE_URL}/user/login`, {
+          username: username.value,
+          password: password.value
+        });
+
+        if (response.data.success) {
+          const token = response.data.data.token;
+          localStorage.setItem('token', token);
+          localStorage.setItem('isLoggedIn', 'true');
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          router.push('/');
+        } else {
+          alert('帳號或密碼錯誤.');
+          console.log('Error: ', response.data.message);
+        }
+      } catch (error) {
+        console.error("登入失敗", error);
+        alert('登入失敗，請稍後再試.');
       }
     };
 

@@ -64,10 +64,8 @@
         <div class="back-login-container">
           <span class="line"></span>
         </div>
-        <button type="submit" class="backlogin-button">返回登入</button>
-
+        <button type="button" class="backlogin-button" @click="handleBackToLogin">返回登入</button>
       </form>
-
       <div class="footer">FHIR Taiwan Open IG Registry Workgroup</div>
     </div>
   </div>
@@ -76,6 +74,7 @@
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -88,13 +87,30 @@ export default defineComponent({
     const email = ref("");
     const router = useRouter();
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
       if (password.value !== confirmPassword.value) {
         alert("密碼和確認密碼不匹配.");
         return;
       }
-      // 執行註冊邏輯
-      router.push("/login");
+
+      try {
+        const response = await axios.post(
+          `https://api.registry.fhir.tw/user/register?username=${username.value}&password=${password.value}&email=${encodeURIComponent(email.value)}&firstname=${encodeURIComponent(firstName.value)}&lastname=${encodeURIComponent(lastName.value)}`,
+          {},
+          {
+            headers: {
+              accept: "application/json",
+            },
+          }
+        );
+        if (response.status === 200) {
+          alert("註冊成功!");
+          router.push("/login");
+        }
+      } catch (error) {
+        console.error("註冊失敗", error);
+        alert("註冊失敗，請檢查輸入資訊或稍後再試.");
+      }
     };
 
     const handleBackToLogin = () => {
@@ -129,7 +145,6 @@ export default defineComponent({
   gap: 4px
   margin-bottom: 24px
   align-items: flex-start
-
 
 .register-title
   color: white

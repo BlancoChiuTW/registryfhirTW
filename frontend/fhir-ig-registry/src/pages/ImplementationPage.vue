@@ -24,15 +24,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>臺灣核心實作指引</td>
-            <td>適用於台灣醫療院所資料交換情境的核心實作指引</td>
-            <td>0.2.0</td>
-            <td>衛生福利部</td>
+          <tr v-for="guide in paginatedGuides" :key="guide.id">
+            <td>{{ guide.name }}</td>
+            <td>{{ guide.description }}</td>
+            <td>{{ guide.ig_version }}</td>
+            <td>{{ guide.authority }}</td>
             <td class="actions">
               <q-btn
                 flat
-                @click="viewGuide"
+                @click="viewGuide(guide.url)"
                 label="查看"
                 color="white"
                 text-color="black"
@@ -41,7 +41,7 @@
               <q-btn
                 v-if="loggedIn"
                 flat
-                @click="viewHistory"
+                @click="openHistoryDialog(guide.id)"
                 label="歷史版本"
                 color="white"
                 text-color="black"
@@ -50,7 +50,7 @@
               <q-btn
                 v-if="loggedIn"
                 flat
-                @click="editGuide"
+                @click="editGuide(guide)"
                 label="編輯"
                 color="white"
                 text-color="black"
@@ -59,7 +59,7 @@
               <q-btn
                 v-if="loggedIn"
                 flat
-                @click="deleteGuide"
+                @click="deleteGuide(guide.id)"
                 label="刪除"
                 color="white"
                 text-color="black"
@@ -70,47 +70,166 @@
         </tbody>
       </table>
     </div>
-    <CreateGuideDialog :showDialog="showCreateDialog" @close="showCreateDialog = false" />
+    <CreateGuideDialog :showDialog="showCreateDialog" @close="showCreateDialog = false" @refresh="fetchImplementationGuides" />
+    <EditGuideDialog :showDialog="showEditDialog" @close="showEditDialog = false" :guide="selectedGuide" @refresh="fetchImplementationGuides" />
+    <ViewHistoryDialog :showDialog="showHistoryDialog" @close="showHistoryDialog = false" :guideId="selectedGuideId" @refresh="fetchImplementationGuides" />
   </div>
 </template>
 
 <script>
-import {
-  QBtn,
-} from "quasar";
-import CreateGuideDialog from "../components/CreateGuideDialog.vue";
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+import { QBtn, useQuasar } from 'quasar';
+import CreateGuideDialog from '../components/CreateGuideDialog.vue';
+import EditGuideDialog from '../components/EditGuideDialog.vue';
+import ViewHistoryDialog from '../components/ViewHistoryDialog.vue';
+
+const API_BASE_URL = 'https://api.registry.fhir.tw';
 
 export default {
-  name: "ImplementationPage",
+  name: 'ImplementationPage',
   components: {
     QBtn,
-    CreateGuideDialog
+    CreateGuideDialog,
+    EditGuideDialog,
+    ViewHistoryDialog,
   },
-  data() {
-    return {
-      loggedIn: false,
-      showCreateDialog: false,
+  setup() {
+    const $q = useQuasar();
+    const loggedIn = ref(false);
+    const showCreateDialog = ref(false);
+    const showEditDialog = ref(false);
+    const showHistoryDialog = ref(false);
+    const selectedGuide = ref(null);
+    const selectedGuideId = ref(null);
+    const historyVersions = ref([]);
+    const implementationGuides = ref([]);
+    const currentPage = ref(1);
+    const itemsPerPage = ref(10);
+
+    const paginatedGuides = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage.value;
+      const end = start + itemsPerPage.value;
+      return implementationGuides.value.slice(start, end);
+    });
+
+    const fetchImplementationGuides = () => {
+      axios
+        .get(`${API_BASE_URL}/ig`)
+        .then((response) => {
+          implementationGuides.value = response.data.data;
+        })
+        .catch((error) => {
+          handleErrorResponse(error);
+        });
     };
-  },
-  methods: {
-    addGuide() {
-      this.showCreateDialog = true;
-    },
-    viewGuide() {
-      console.log("查看");
-    },
-    viewHistory() {
-      console.log("歷史版本");
-    },
-    editGuide() {
-      console.log("編輯");
-    },
-    deleteGuide() {
-      console.log("刪除");
-    },
-  },
-  created() {
-    this.loggedIn = Boolean(localStorage.getItem("isLoggedIn"));
+
+    const viewGuide = (url) => {
+      if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'http://' + url;
+      }
+      window.open(url, '_blank');
+    };
+
+    const openHistoryDialog = (guideId) => {
+      selectedGuideId.value = guideId;
+      showHistoryDialog.value = true;
+    };
+
+    const editGuide = (guide) => {
+      selectedGuide.value = guide;
+      showEditDialog.value = true;
+    };
+
+    const deleteGuide = (guideId) => {
+      axios
+        .delete(`${API_BASE_URL}/ig/${guideId}`)
+        .then((response) => {
+          $q.notify({
+            type: 'positive',
+            message: '刪除成功',
+          });
+          implementationGuides.value = implementationGuides.value.filter(
+            (guide) => guide.id !== guideId
+          );
+          fetchImplementationGuides();
+        })
+        .catch((error) => {
+          handleErrorResponse(error);
+        });
+    };
+
+    const handleErrorResponse = (error) => {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            $q.notify({
+              type: 'negative',
+              message: '資料檢核失敗',
+            });
+            break;
+          case 401:
+            $q.notify({
+              type: 'warning',
+              message: '請先登入',
+            });
+            break;
+          case 403:
+            $q.notify({
+              type: 'warning',
+              message: '無法修改不是由自己發布的 IG',
+            });
+            break;
+          case 404:
+            $q.notify({
+              type: 'negative',
+              message: '找不到資源',
+            });
+            break;
+          case 500:
+            $q.notify({
+              type: 'negative',
+              message: '我掛了，請聯絡 Lorex',
+            });
+            break;
+          default:
+            $q.notify({
+              type: 'negative',
+              message: '未知錯誤',
+            });
+        }
+      } else {
+        $q.notify({
+          type: 'negative',
+          message: '網絡錯誤',
+        });
+      }
+    };
+
+    onMounted(() => {
+      loggedIn.value = Boolean(localStorage.getItem('isLoggedIn'));
+      fetchImplementationGuides();
+    });
+
+    return {
+      loggedIn,
+      showCreateDialog,
+      showEditDialog,
+      showHistoryDialog,
+      selectedGuide,
+      selectedGuideId,
+      historyVersions,
+      implementationGuides,
+      currentPage,
+      itemsPerPage,
+      paginatedGuides,
+      fetchImplementationGuides,
+      viewGuide,
+      openHistoryDialog,
+      editGuide,
+      deleteGuide,
+      handleErrorResponse,
+    };
   },
 };
 </script>
@@ -139,6 +258,11 @@ export default {
   color: #ffffff;
 }
 
+.page-list {
+  margin: 0 auto;
+  width: 80vw; /* 確保左右留白各10vw */
+}
+
 .page-list table {
   width: 100%;
   border-collapse: collapse;
@@ -163,6 +287,31 @@ export default {
   border-bottom: none;
 }
 
+.page-list th:nth-child(1),
+.page-list td:nth-child(1) {
+  width: 10%;
+}
+
+.page-list th:nth-child(2),
+.page-list td:nth-child(2) {
+  width: 30%;
+}
+
+.page-list th:nth-child(3),
+.page-list td:nth-child(3) {
+  width: 10%;
+}
+
+.page-list th:nth-child(4),
+.page-list td:nth-child(4) {
+  width: 10%;
+}
+
+.page-list th:nth-child(5),
+.page-list td:nth-child(5) {
+  width: 40%;
+}
+
 .add-guide-btn {
   font-family: Inter;
   font-size: 16px;
@@ -178,13 +327,16 @@ export default {
 }
 
 .actions {
-  display: flex;
-  gap: 10px;
+  display: contents;
 }
 
 .action-btn {
   background-color: black !important;
   color: white !important;
   border-radius: 8px;
+  width: auto;
+  text-align: center;
+  padding: 5px 10px;
+  margin-left: 10px;
 }
 </style>

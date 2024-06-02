@@ -5,7 +5,7 @@
         <div class="text-h6">新增實作指引 Create Implementation Guide</div>
       </q-card-section>
       <q-card-section class="q-pt-none">
-        <q-form @submit="submitForm">
+        <q-form @submit.prevent="submitForm">
           <div class="q-gutter-md">
             <div class="row">
               <q-input v-model="form.igName" label="IG 名稱" filled />
@@ -20,8 +20,9 @@
               />
             </div>
             <div class="row">
-              <q-input v-model="form.igName" label="IG 名稱" filled />
               <q-input v-model="form.igTag" label="IG 標籤" filled />
+              <q-input v-model="form.authority" label="發布單位" filled />
+
             </div>
             <div class="text-subtitle1">IG 初始版本資訊 Initial Edition</div>
             <div class="row">
@@ -37,9 +38,11 @@
               />
             </div>
             <div class="row">
-              <q-input
+              <q-select
                 v-model="form.initialEdition.activeStatus"
-                label="有效狀態"
+                label="狀態"
+                :options="statusOptions"
+                map-options
                 filled
               />
               <q-checkbox
@@ -83,6 +86,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "CreateGuideDialog",
   props: {
@@ -104,6 +109,13 @@ export default {
           igUrl: "",
         },
       },
+      statusOptions: [
+        { label: '--', value: '' },
+        { label: 'draft', value: 'draft' },
+        { label: 'active', value: 'active' },
+        { label: 'retired', value: 'retired' },
+        { label: 'unknown', value: 'unknown' }
+      ],
     };
   },
   watch: {
@@ -118,11 +130,55 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log("Form submitted", this.form);
-      this.localShowDialog = false;
+      // 构建请求数据
+      const requestData = {
+        name: this.form.igName,
+        description: this.form.igDescription,
+        package_id: this.form.caseName,
+        authority: this.form.authority, // 如果需要可以设定默认值
+        country: "", // 如果需要可以设定默认值
+        language: "", // 如果需要可以设定默认值
+        category: 1, // 如果需要可以设定默认值
+        tags: [this.form.igTag],
+        ig_version: this.form.initialEdition.version,
+        fhir_version: this.form.initialEdition.fhirVersion,
+        url: this.form.initialEdition.igUrl,
+        status: typeof this.form.initialEdition.activeStatus === 'string' ? this.form.initialEdition.activeStatus : '', // 确保是字符串
+        experimental: this.form.initialEdition.trialIG
+      };
+
+      // 发送 POST 请求
+      axios.post('https://api.registry.fhir.tw/ig', requestData)
+        .then(response => {
+          console.log('新增成功', response.data);
+          this.fetchImplementationGuides(); // 调用刷新数据的方法
+          this.localShowDialog = false; // 关闭对话框
+        })
+        .catch(error => {
+          console.error('新增失败', error);
+        });
     },
     closeDialog() {
       this.localShowDialog = false;
+    },
+    fetchImplementationGuides() {
+      axios.get('https://api.registry.fhir.tw/ig')
+        .then(response => {
+          console.log('獲取到的資料:', response.data.data);  // 添加日誌檢查數據
+          this.$parent.implementationGuides = response.data.data.map(guide => {
+            // 確保正確提取editions數據
+            const latestEdition = (guide.editions && guide.editions.length > 0) ? guide.editions[0] : {};
+            return {
+              ...guide,
+              ig_version: latestEdition.ig_version || '',
+              url: latestEdition.url || '',
+            };
+          });
+          console.log('處理後的implementationGuides:', this.$parent.implementationGuides);  // 檢查處理後的數據
+        })
+        .catch(error => {
+          console.error('獲取實作指引列表失敗', error);
+        });
     }
   },
 };
@@ -214,5 +270,10 @@ export default {
   margin-left: 20px;
   width: 80px;
   height: 50px;
+}
+.q-select{
+  background-color: white;
+  color: black;
+  width: 100px;
 }
 </style>
