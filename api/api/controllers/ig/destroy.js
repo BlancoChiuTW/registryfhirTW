@@ -29,7 +29,7 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     // get ig
-    const ig = await GuidesEditions.findOne({
+    const ig = await Guides.findOne({
       id: inputs.id
     }).populate('editions');
 
