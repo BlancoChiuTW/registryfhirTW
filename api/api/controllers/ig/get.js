@@ -79,7 +79,10 @@ module.exports = {
 
     await ig.forEach(async (item) => {
       item.category = item.category.name;
-      item.uploader = item.uploader.firstname + ' ' + item.uploader.lastname;
+      item.uploader = {
+        id: item.uploader.id,
+        name: item.uploader.firstName + ' ' + item.uploader.lastName
+      }
       // get latest edition
       item.url = item.editions[item.editions.length - 1].url;
       item.ig_version = item.editions[item.editions.length - 1].ig_version;
