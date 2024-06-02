@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: 'Get user.',
+  description: '【管理員功能】取得使用者資料',
 
 
   inputs: {

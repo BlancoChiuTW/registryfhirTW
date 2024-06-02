@@ -5,7 +5,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: 'Login user.',
+  description: '使用者登入',
 
 
   inputs: {

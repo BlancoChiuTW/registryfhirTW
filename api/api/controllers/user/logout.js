@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: 'Logout user.',
+  description: '使用者登出',
 
 
   inputs: {

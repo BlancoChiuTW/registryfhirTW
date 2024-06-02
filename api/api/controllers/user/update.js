@@ -3,7 +3,7 @@
 module.exports = {
 
   friendlyName: 'User',
-  description: 'Update user.',
+  description: '【管理員功能】更新使用者資料',
 
   inputs: {
     uid: {

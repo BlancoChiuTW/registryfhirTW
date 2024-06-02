@@ -6,7 +6,7 @@ module.exports = {
   friendlyName: 'GuideEdition',
 
 
-  description: 'Get specific edition of IG.',
+  description: '【無權限要求】取得特定 IG 底下的單一筆版本發布資料',
 
 
   inputs: {

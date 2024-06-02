@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: 'Register user.',
+  description: '使用者註冊',
 
 
   inputs: {

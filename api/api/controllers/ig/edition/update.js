@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'GuideEdition',
 
 
-  description: 'Update edition.',
+  description: '【使用者功能】更新特定 IG 底下的版本發布資料，只能更新自己上傳的資料，管理員則無限制',
 
 
   inputs: {

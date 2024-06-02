@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Index',
 
 
-  description: 'Index something.',
+  description: '首頁',
 
 
   inputs: {

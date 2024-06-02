@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Guide',
 
 
-  description: 'Destroy ig.',
+  description: '【使用者功能】刪除一筆 IG 資料，並刪除這個 IG 底下所有版本發布資料，只能刪除自己上傳的 IG 資料，管理員則無限制',
 
 
   inputs: {

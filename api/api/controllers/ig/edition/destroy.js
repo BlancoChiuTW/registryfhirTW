@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Destroy',
+  friendlyName: 'GuideEdition',
 
 
-  description: 'Destroy edition.',
+  description: '【使用者功能】移除特定 IG 底下的版本發布，只能移除自己發布的 IG，若為管理員則無限制。',
 
 
   inputs: {

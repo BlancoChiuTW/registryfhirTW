@@ -6,7 +6,7 @@ module.exports = {
   friendlyName: 'Guide',
 
 
-  description: 'Update ig.',
+  description: '【使用者功能】更新 IG 資料，只能更新自己上傳的 IG 資料，管理員則無限制',
 
 
   inputs: {

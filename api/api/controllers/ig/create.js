@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Guide',
 
 
-  description: 'Create ig.',
+  description: '【使用者功能】新增一筆 IG 資料，並建立第一個版本發布資料',
 
 
   inputs: {

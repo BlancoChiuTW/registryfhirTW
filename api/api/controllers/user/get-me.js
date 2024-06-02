@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: '',
+  description: '取得目前登入的使用者資料',
 
 
   inputs: {

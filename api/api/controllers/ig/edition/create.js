@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'GuideEdition',
 
 
-  description: 'Create edition.',
+  description: '【使用者功能】新增 IG 底下的版本發布',
 
 
   inputs: {

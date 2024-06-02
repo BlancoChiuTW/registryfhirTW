@@ -6,7 +6,7 @@ module.exports = {
   friendlyName: 'Guide',
 
 
-  description: 'Get ig.',
+  description: '【無權限要求】取得 IG 資料列表',
 
 
   inputs: {

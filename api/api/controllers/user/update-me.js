@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'User',
 
 
-  description: '',
+  description: '【使用者功能】更新自己的使用者資料',
 
 
   inputs: {

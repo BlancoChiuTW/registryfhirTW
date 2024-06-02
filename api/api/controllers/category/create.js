@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Category',
 
 
-  description: '新增 IG 類別',
+  description: '【管理員功能】新增 IG 類別',
 
 
   inputs: {
