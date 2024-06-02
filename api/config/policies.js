@@ -47,6 +47,7 @@ module.exports.policies = {
   'ig/edition/update': ACL.USER,
   'ig/edition/destroy': ACL.USER,
 
+  'category/get': ACL.ANY,
   'category/create': ACL.ANY,
 
   // '*': true,
