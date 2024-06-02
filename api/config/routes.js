@@ -43,6 +43,9 @@ module.exports.routes = {
   'PUT /ig/:guide/edition/:edition_id': 'ig/edition/update',
   'DELETE /ig/:guide/edition/:edition_id': 'ig/edition/destroy',
 
+  // IG Category 相關
+  'GET /category': 'ig/category/get',
+
 
   
   // 靜態檔案相關
