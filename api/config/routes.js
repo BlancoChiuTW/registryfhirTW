@@ -44,7 +44,7 @@ module.exports.routes = {
   'DELETE /ig/:guide/edition/:edition_id': 'ig/edition/destroy',
 
   // IG Category 相關
-  'GET /category': 'ig/category/get',
+  'POST /category': 'category/create',
 
 
   
