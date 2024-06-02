@@ -101,6 +101,15 @@ module.exports = {
       tags: inputs.tags,
     };
 
+    // check if category exists
+    const category = await GuidesCategory.findOne({
+      id: inputs.category
+    });
+
+    if (!category) {
+      return exits.err(202);
+    }
+
     // create ig
     const ig = await Guides.create(igData).fetch();
 
