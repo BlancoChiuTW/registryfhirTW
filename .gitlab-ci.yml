@@ -17,6 +17,6 @@ deploy_web:
   stage: deploy
   script:
     - sshpass -p $DEPLOY_PASS scp -o StrictHostKeyChecking=no -r ./frontend/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH_WEB
-    - sshpass -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH_WEB && npm install npm run build"
+    - sshpass -p $DEPLOY_PASS ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH_WEB && npm install && pm2 restart all"
   only:
     - main

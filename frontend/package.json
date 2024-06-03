@@ -1,9 +1,9 @@
 {
-  "name": "fhir-open-igreg-frontend",
+  "name": "fhir-ig-registry",
   "version": "0.0.1",
-  "description": "FHIR Open Registry Frontend",
-  "productName": "FHIR Open Registry Frontend",
-  "author": "Lorex <ceo@sita.tech>",
+  "description": "A registry for FHIR Implementation Guides",
+  "productName": "FHIR IG Registry",
+  "author": "blanco0225 <king860225@gmail>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
@@ -14,19 +14,20 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "axios": "^1.7.2",
     "quasar": "^2.16.0",
     "vue": "^3.4.18",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.0.0",
-    "vite-plugin-checker": "^0.6.4",
-    "eslint-config-prettier": "^8.1.0",
-    "prettier": "^2.5.1",
     "@quasar/app-vite": "^1.9.0",
     "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.14"
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "postcss": "^8.4.14",
+    "prettier": "^2.5.1",
+    "vite-plugin-checker": "^0.6.4"
   },
   "engines": {
     "node": "^20 || ^18 || ^16",

@@ -1,6 +1,6 @@
-# FHIR Open Registry Frontend (fhir-open-igreg-frontend)
+# FHIR IG Registry (fhir-ig-registry)
 
-FHIR Open Registry Frontend
+A registry for FHIR Implementation Guides
 
 ## Install the dependencies
 ```bash

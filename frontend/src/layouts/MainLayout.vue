@@ -1,43 +1,26 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf">
+    <q-header class="header">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="header-title">
+          TW Open IG Registry
+        </div>
+        <div class="nav-list">
+          <q-btn flat label="首頁 Home" @click="goToHome" class="nav-item" />
+          <q-btn flat label="實作指引 Implementation Guide" @click="goToGuide" class="nav-item" />
+          <q-btn flat label="應用程式 Application" @click="goToApplication" class="nav-item" />
+        </div>
+        <q-space />
+        <div v-if="loggedIn" class="user-menu">
+          <q-btn flat label="新增實作指引" @click="goToAddGuide" class="nav-item" />
+          <q-avatar>
+            <img src="path-to-avatar-image.png" alt="User Avatar">
+          </q-avatar>
+          <q-btn flat label="登出" @click="logout" class="nav-item" />
+        </div>
+        <q-btn flat label="登入" @click="goToLogin" v-if="!loggedIn" />
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -45,62 +28,111 @@
   </q-layout>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script>
+import { defineComponent, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useNotifications } from '../components/useNotifications';
 
-defineOptions({
-  name: 'MainLayout'
-})
+export default defineComponent({
+  name: 'MainLayout',
+  setup() {
+    const { notifySuccess, handleErrorResponse } = useNotifications();
+    const loggedIn = ref(false);
+    const router = useRouter();
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+    const goToHome = () => {
+      router.push('/');
+      notifySuccess('回到首頁');
+    };
 
-const leftDrawerOpen = ref(false)
+    const goToGuide = () => {
+      router.push('/Implementation');
+      notifySuccess('進入實作指引');
+    };
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+    const goToApplication = () => {
+      router.push('/application');
+      notifySuccess('進入應用程式');
+    };
+
+    const goToAddGuide = () => {
+      router.push('/add-guide');
+      notifySuccess('新增實作指引');
+    };
+
+    const goToLogin = () => {
+      router.push('/login');
+      notifySuccess('登入頁面');
+    };
+
+    const logout = () => {
+      loggedIn.value = false;
+      localStorage.removeItem('isLoggedIn');
+      router.push('/login');
+      notifySuccess('已登出');
+    };
+
+    onMounted(() => {
+      loggedIn.value = Boolean(localStorage.getItem('isLoggedIn'));
+    });
+
+    return {
+      loggedIn,
+      goToHome,
+      goToGuide,
+      goToApplication,
+      goToAddGuide,
+      goToLogin,
+      logout,
+    };
+  },
+});
 </script>
+
+<style scoped>
+.header {
+  background: #111315;
+  border-bottom: 1px solid #212529;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.header-title {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #FFFFFF;
+  margin-right: 32px;
+  margin-left: 80px;
+}
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  opacity: 1;
+}
+.nav-item {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  color: white;
+}
+.q-toolbar {
+  height: 100%;
+  align-items: center;
+}
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-menu q-avatar img {
+  width: 32px;
+  height: 32px;
+}
+</style>
