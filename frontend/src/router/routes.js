@@ -26,7 +26,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/ImplementationPage.vue') },
     ],
-  }
+  },
 ];
 
 export default routes;
