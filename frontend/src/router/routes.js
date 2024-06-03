@@ -26,11 +26,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/ImplementationPage.vue') },
     ],
-  },
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
-  },
+  }
 ];
 
 export default routes;
