@@ -29,7 +29,7 @@
             <td>{{ guide.description }}</td>
             <td>{{ guide.ig_version }}</td>
             <td>{{ guide.authority }}</td>
-            <td class="actions">
+            <td>
               <q-btn
                 flat
                 @click="viewGuide(guide.url)"
@@ -332,10 +332,6 @@ export default {
 
 .add-guide-btn .q-icon {
   margin-right: 8px;
-}
-
-.actions {
-  display: contents;
 }
 
 .action-btn {
