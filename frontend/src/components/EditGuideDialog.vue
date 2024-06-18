@@ -153,7 +153,11 @@ export default {
         this.form.category = -1;
       }
       axios
-        .put(`${API_BASE_URL}/ig/${this.form.id}`, this.form)
+        .put(`${API_BASE_URL}/ig/${this.form.id}`, this.form, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then((response) => {
           console.log("Form submitted", response.data);
           this.localShowDialog = false;

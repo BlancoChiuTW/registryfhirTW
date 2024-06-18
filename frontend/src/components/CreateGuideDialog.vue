@@ -148,7 +148,11 @@ export default {
       };
 
       // 发送 POST 请求
-      axios.post('https://api.registry.fhir.tw/ig', requestData)
+      axios.post('https://api.registry.fhir.tw/ig', requestData, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           console.log('新增成功', response.data);
           this.fetchImplementationGuides(); // 调用刷新数据的方法
@@ -162,7 +166,11 @@ export default {
       this.localShowDialog = false;
     },
     fetchImplementationGuides() {
-      axios.get('https://api.registry.fhir.tw/ig')
+      axios.get('https://api.registry.fhir.tw/ig', {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           console.log('獲取到的資料:', response.data.data);  // 添加日誌檢查數據
           this.$parent.implementationGuides = response.data.data.map(guide => {

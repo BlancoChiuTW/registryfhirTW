@@ -93,7 +93,11 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post(`${API_BASE_URL}/ig/${this.form.guide}/edition`, this.form)
+      axios.post(`${API_BASE_URL}/ig/${this.form.guide}/edition`, this.form, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           console.log("版本新增成功", response.data);
           this.localShowDialog = false;

@@ -3,9 +3,18 @@
     <img src="../assets/logo.svg" alt="HL7 FHIR Taiwan" class="logo" />
     <div class="content">
       <h1 class="title">台灣 FHIR 開放登錄平台</h1>
-      <div class="notice">
+      <div class="q-pa-md q-gutter-sm">
+        <q-banner
+          inline
+          class="notice"
+          icon="info"
+          color="primary"
+          dense
+          rounded
+        >
         注意：
         本平台由非營利社群維護，並非政府官方的登錄系統。有關國家標準相關提案事項，請聯絡衛生福利部數位健康雲辦公室。
+        </q-banner>
       </div>
       <p class="description">
         歡迎來到台灣 FHIR 開放登錄平台，本平台旨在提供一個索引系統，使 FHIR
@@ -81,18 +90,14 @@ export default {
 
 .notice {
   width: 100%;
-  height: 84px;
   padding: 27px 23px;
   gap: 16px;
   border-radius: 8px 8px 8px 8px;
   background: #032830;
   border: 1px solid #e0e0e0;
   margin-top: 20px;
-  margin-bottom: 45px;
-  font-family: Inter;
-  font-size: 18px;
+  margin-bottom: 20px;
   font-weight: 600;
-  line-height: 28px;
   color: #6edff6;
 }
 

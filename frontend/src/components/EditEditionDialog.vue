@@ -118,7 +118,11 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.put(`${API_BASE_URL}/ig/${this.guideId}/edition/${this.form.id}`, this.form)
+      axios.put(`${API_BASE_URL}/ig/${this.guideId}/edition/${this.form.id}`, this.form, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           console.log("Form submitted", response.data);
           this.localShowDialog = false;

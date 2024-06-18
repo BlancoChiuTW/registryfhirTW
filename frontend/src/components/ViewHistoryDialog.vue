@@ -124,7 +124,11 @@ export default {
   },
   methods: {
     fetchHistoryVersions() {
-      axios.get(`${API_BASE_URL}/ig/${this.guideId}/edition`)
+      axios.get(`${API_BASE_URL}/ig/${this.guideId}/edition`, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           this.historyVersions = response.data.data;
           if (response.data.data.length > 0) {
@@ -143,7 +147,11 @@ export default {
       this.showEditEditionDialog = true;
     },
     deleteVersion(edition) {
-      axios.delete(`${API_BASE_URL}/ig/${this.guideId}/edition/${edition.id}`)
+      axios.delete(`${API_BASE_URL}/ig/${this.guideId}/edition/${edition.id}`, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then(response => {
           this.$q.notify({
             type: 'positive',

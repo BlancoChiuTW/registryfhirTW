@@ -8,14 +8,10 @@
         <div class="nav-list">
           <q-btn flat label="首頁 Home" @click="goToHome" class="nav-item" />
           <q-btn flat label="實作指引 Implementation Guide" @click="goToGuide" class="nav-item" />
-          <q-btn flat label="應用程式 Application" @click="goToApplication" class="nav-item" />
+          <!-- <q-btn flat label="應用程式 Application" @click="goToApplication" class="nav-item" /> -->
         </div>
         <q-space />
         <div v-if="loggedIn" class="user-menu">
-          <q-btn flat label="新增實作指引" @click="goToAddGuide" class="nav-item" />
-          <q-avatar>
-            <img src="path-to-avatar-image.png" alt="User Avatar">
-          </q-avatar>
           <q-btn flat label="登出" @click="logout" class="nav-item" />
         </div>
         <q-btn flat label="登入" @click="goToLogin" v-if="!loggedIn" />

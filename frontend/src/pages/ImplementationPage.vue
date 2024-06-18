@@ -115,7 +115,11 @@ export default {
 
     const fetchImplementationGuides = () => {
       axios
-        .get(`${API_BASE_URL}/ig`)
+        .get(`${API_BASE_URL}/ig`, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then((response) => {
           implementationGuides.value = response.data.data;
         })
@@ -143,7 +147,11 @@ export default {
 
     const deleteGuide = (guideId) => {
       axios
-        .delete(`${API_BASE_URL}/ig/${guideId}`)
+        .delete(`${API_BASE_URL}/ig/${guideId}`, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
         .then((response) => {
           $q.notify({
             type: 'positive',
