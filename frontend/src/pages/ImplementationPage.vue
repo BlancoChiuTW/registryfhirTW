@@ -108,9 +108,10 @@ export default {
     const itemsPerPage = ref(10);
 
     const paginatedGuides = computed(() => {
-      const start = (currentPage.value - 1) * itemsPerPage.value;
-      const end = start + itemsPerPage.value;
-      return implementationGuides.value.slice(start, end);
+      // const start = (currentPage.value - 1) * itemsPerPage.value;
+      // const end = start + itemsPerPage.value;
+      // return implementationGuides.value.slice(start, end);
+      return implementationGuides.value;
     });
 
     const fetchImplementationGuides = () => {
