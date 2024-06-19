@@ -6,25 +6,35 @@
       </q-card-section>
       <q-card-section class="q-pt-none">
         <q-form @submit="submitForm">
-          <div class="q-gutter-md">
-            <div class="row">
+          <div class="row">
+            <div class="col">
               <q-input v-model="form.ig_version" label="版本號" filled />
+            </div>
+            <div class="col">
               <q-input v-model="form.fhir_version" label="FHIR 版本" filled />
             </div>
-            <div class="row">
+          </div>
+          <div class="row">
+            <div class="col">
               <q-select
-                v-model="form.status"
-                :options="statusOptions"
-                label="狀態"
-                filled
-              />
-              <q-checkbox
+              v-model="form.status"
+              :options="statusOptions"
+              label="狀態"
+              filled
+             />
+            </div>
+            <div class="col">
+                <q-checkbox
+                dense
                 v-model="form.experimental"
                 label="是否為實驗性 IG? (勾選框)"
                 filled
+                class="custom-checkbox"
               />
             </div>
-            <div class="row single-input">
+          </div>
+          <div class="row">
+            <div class="col">
               <q-input
                 v-model="form.url"
                 label="IG 網址"
@@ -35,22 +45,24 @@
           </div>
         </q-form>
       </q-card-section>
-      <q-card-actions align="right">
-        <q-btn
+      <q-card-actions>
+        <div class="implementation-btn">
+          <q-btn
           flat
           label="保存"
           color="primary"
           @click="submitForm"
           class="submit-btn"
-        />
-        <q-btn
-          flat
-          label="取消"
-          color="white"
-          text-color="white"
-          @click="closeDialog"
-          class="cancel-btn"
-        />
+          />
+          <q-btn
+            flat
+            label="取消"
+            color="white"
+            text-color="white"
+            @click="closeDialog"
+            class="cancel-btn"
+          />
+        </div>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -118,7 +130,14 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.put(`${API_BASE_URL}/ig/${this.guideId}/edition/${this.form.id}`, this.form, {
+      const sendData = {
+        ig_version: this.form.ig_version,
+        fhir_version: this.form.fhir_version,
+        status: this.form.status.value,
+        experimental: this.form.experimental,
+        url: this.form.url
+      }
+      axios.put(`${API_BASE_URL}/ig/${this.guideId}/edition/${this.form.id}`, sendData, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
@@ -149,7 +168,7 @@ export default {
 
 .row {
   display: flex;
-  gap: 60px;
+  gap: 10px;
   margin-bottom: 10px;
   justify-content: space-between;
 }
@@ -178,28 +197,24 @@ export default {
   border-radius: 8px;
 }
 
-.single-input .q-input {
-  width: 97%;
-}
-
 .q-checkbox {
-  display: flex;
   background-color: white;
-  color: #828282;
+  color: #000;
+  text-align: left;
   border-radius: 8px;
-  width: 350px;
   height: 56px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .q-select {
   background-color: white;
   color: #828282;
   border-radius: 8px;
-  width: 350px;
-  height: 56px;
 }
 
-.Implementation-btn {
+.implementation-btn {
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
@@ -207,16 +222,21 @@ export default {
   flex-direction: row;
 }
 
-.submit-btn {
+.submit-btn{
   border-radius: 8px;
   width: 80px;
   height: 50px;
 }
 
-.cancel-btn {
+.cancel-btn{
   border-radius: 8px;
   margin-left: 20px;
+  margin-right: 10px;
   width: 80px;
   height: 50px;
+}
+
+.custom-checkbox .q-checkbox__label {
+  margin-left: 10px !important;
 }
 </style>

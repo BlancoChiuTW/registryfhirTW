@@ -61,7 +61,7 @@
           />
           <q-btn
             flat
-            label="取消"
+            label="關閉"
             color="white"
             text-color="white"
             @click="closeDialog"

@@ -278,6 +278,7 @@ export default {
   margin-left: 20px;
   width: 80px;
   height: 50px;
+  margin-right: 10px;
 }
 .q-select{
   background-color: white;
