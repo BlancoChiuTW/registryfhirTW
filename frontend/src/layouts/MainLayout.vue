@@ -7,7 +7,7 @@
         </div>
         <div class="nav-list">
           <q-btn flat label="首頁 Home" @click="goToHome" class="nav-item" />
-          <q-btn flat label="實作指引 Implementation Guide" @click="goToGuide" class="nav-item" />
+          <q-btn flat label="實作指引 Implementation Guides" @click="goToGuide" class="nav-item" />
           <!-- <q-btn flat label="應用程式 Application" @click="goToApplication" class="nav-item" /> -->
         </div>
         <q-space />
@@ -111,7 +111,7 @@ export default defineComponent({
   opacity: 1;
 }
 .nav-item {
-  font-family: Inter;
+  /* font-family: Inter; */
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;

@@ -6,46 +6,42 @@
       </q-card-section>
       <q-card-section class="q-pt-none">
         <q-form @submit="submitForm">
-          <div class="q-gutter-md">
-            <div class="row">
+          <div class="row">
+            <div class="col">
               <q-input v-model="form.name" label="IG 名稱" filled />
+            </div>
+            <div class="col">
               <q-input v-model="form.package_id" label="套件名稱" filled />
             </div>
-            <div class="row single-input">
-              <q-input
-                v-model="form.description"
-                label="IG 描述"
-                filled
-                class="full-width-input"
-              />
-            </div>
-            <div class="row">
-              <q-input v-model="form.tags" label="IG 標籤" filled />
-              <q-input
-                v-model.number="form.category"
-                label="IG 分類"
-                type="number"
-                filled
-              />
-            </div>
+            
           </div>
-          <div class="row single-input">
-            <q-input v-model="form.url" label="IG 網址" filled />
-            <q-select
-              v-model="form.status"
-              :options="statusOptions"
-              label="IG 有效狀態"
+          <div class="row">
+            <div class="col">
+              <q-input
+              v-model="form.description"
+              label="IG 描述"
               filled
               class="full-width-input"
             />
+            </div>
           </div>
-
           <div class="row">
-            <q-checkbox
-              v-model="form.experimental"
-              label="是否為實驗性 IG? (勾選框)"
+            <div class="col">
+              <q-input v-model="form.tags" label="IG 標籤" filled />
+            </div>
+            <div class="col">
+              <q-select
+              v-model="form.category"
+              :options="categoryOptions"
+              label="IG 分類"
               filled
             />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <q-input v-model="form.authority" label="發布單位" filled />
+            </div>
           </div>
         </q-form>
       </q-card-section>
@@ -89,12 +85,8 @@ export default {
         package_id: "",
         description: "",
         tags: "",
-        ig_version: "",
-        fhir_version: "",
-        url: "",
-        status: "",
-        category: -1, // 初始化為-1
-        experimental: false,
+        category: "", // 初始化為-1
+        authority: "",
       }),
     },
   },
@@ -107,18 +99,12 @@ export default {
         package_id: "",
         description: "",
         tags: "",
-        ig_version: "",
-        fhir_version: "",
-        url: "",
-        status: "",
-        category: -1, // 初始化為-1
-        experimental: false,
+        category: "", // 初始化為-1
+        authority: "",
       },
-      statusOptions: [
-        { label: "草稿", value: "draft" },
-        { label: "正式", value: "active" },
-        { label: "停用", value: "retired" },
-        { label: "未知", value: "unknown" },
+      categoryOptions: [
+        { label: "未修改", value: -1 },
+        { label: "無分類", value: 1 },
       ],
     };
   },
@@ -135,11 +121,12 @@ export default {
       handler(newValue) {
         this.form = { ...newValue };
         // 確保category為數字類型，並且默認為-1
+        console.log(this.form.category)
         if (
-          typeof this.form.category === "string" ||
+          typeof this.form.category === "無分類" ||
           this.form.category === null
         ) {
-          this.form.category = -1;
+          this.form.category = "無分類";
         }
       },
       deep: true,
@@ -151,9 +138,19 @@ export default {
       // 確保category不為null或undefined
       if (this.form.category === null || this.form.category === undefined) {
         this.form.category = -1;
+      } else {
+        this.form.category = this.form.category.value;
       }
+      const sendData = {
+        name: this.form.name,
+        package_id: this.form.package_id,
+        description: this.form.description,
+        tags: this.form.tags,
+        category: this.form.category,
+        authority: this.form.authority,
+      };
       axios
-        .put(`${API_BASE_URL}/ig/${this.form.id}`, this.form, {
+        .put(`${API_BASE_URL}/ig/${this.form.id}`, sendData, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
@@ -184,7 +181,7 @@ export default {
 
 .row {
   display: flex;
-  gap: 60px;
+  gap: 10px;
   margin-bottom: 10px;
   justify-content: space-between;
 }
@@ -193,9 +190,9 @@ export default {
   width: 100%;
 }
 
-.q-gutter-md > .row {
+/* .q-gutter-md > .row {
   margin-bottom: 10px;
-}
+} */
 
 .text-subtitle1 {
   font-family: Inter;
@@ -222,6 +219,12 @@ export default {
 }
 
 .q-input {
+  background-color: white;
+  color: #828282;
+  border-radius: 8px;
+}
+
+.q-select {
   background-color: white;
   color: #828282;
   border-radius: 8px;
