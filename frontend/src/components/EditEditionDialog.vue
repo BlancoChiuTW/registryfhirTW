@@ -145,7 +145,9 @@ export default {
         .then(response => {
           console.log("Form submitted", response.data);
           this.localShowDialog = false;
-          this.$emit('refresh'); // 通知父组件刷新数据
+          this.$emit('refresh');
+          // refresh page
+          window.location.reload();
         })
         .catch(error => {
           console.error("Failed to update edition", error);
