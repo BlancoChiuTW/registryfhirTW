@@ -38,7 +38,7 @@ module.exports = {
     limit: {
       type: 'number',
       description: '每頁筆數',
-      defaultsTo: 10
+      defaultsTo: 999
     },
   },
 
@@ -54,6 +54,25 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
+    // get ig count
+    const cnt = await Guides.count({
+      where: {
+        or: [
+          {name: {
+            contains: inputs.name
+          }},
+          {authority: {
+            contains: inputs.authority
+          }},
+          {country: {
+            contains: inputs.country
+          }},
+          {language: {
+            contains: inputs.language
+          }}
+      ]},
+    });
+
     // get ig list
     const ig = await Guides.find({
       where: {
@@ -93,7 +112,7 @@ module.exports = {
 
     // All done.
     return exits.success({
-      total: ig.length,
+      total: cnt,
       data: ig
     });
 
