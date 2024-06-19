@@ -269,7 +269,7 @@ export default {
 
 .page-list {
   margin: 0 auto;
-  width: 80vw; /* 確保左右留白各10vw */
+  width: 80vw;
 }
 
 .page-list table {
@@ -290,6 +290,7 @@ export default {
 
 .page-list th {
   border-bottom: 3px solid #444;
+  text-align: center;
 }
 
 .page-list td {
@@ -303,12 +304,13 @@ export default {
 
 .page-list th:nth-child(2),
 .page-list td:nth-child(2) {
-  width: 30%;
+  width: 40%;
 }
 
 .page-list th:nth-child(3),
 .page-list td:nth-child(3) {
   width: 10%;
+  text-align: center;
 }
 
 .page-list th:nth-child(4),
@@ -318,7 +320,7 @@ export default {
 
 .page-list th:nth-child(5),
 .page-list td:nth-child(5) {
-  width: 40%;
+  width: 30%;
 }
 
 .add-guide-btn {
